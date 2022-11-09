@@ -1,0 +1,114 @@
+import 'package:flutter/material.dart';
+import 'package:money_manager/chart/view/view_expense.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import '../../db/transaction/transaction_db.dart';
+import '../../model/transaction/transaction_model.dart';
+
+class ScreenExpenseChart extends StatefulWidget {
+  const ScreenExpenseChart({super.key});
+
+  @override
+  State<ScreenExpenseChart> createState() => _ScreenExpenseChartState();
+}
+
+class _ScreenExpenseChartState extends State<ScreenExpenseChart> {
+  @override
+  void initState() {
+    TransactionDB.instance.refresh();
+    super.initState();
+  }
+
+  final List<ExpenseData> data =
+      chartsort(TransactionDB.instance.expensetransactionListNotifier.value);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 41, 42, 41),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ExpenseList(),
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.arrow_right_alt,
+              color: Colors.white,
+            ),
+            label: const Text(
+              'View All',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+            ),
+          ),
+        ),
+        Padding(
+            padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 08),
+            child: SfCircularChart(
+                 legend: Legend(
+                      borderWidth: 6,
+                      isVisible: true,
+                      textStyle: const TextStyle(color: Colors.white)
+                    ),
+              series: <PieSeries>[
+              // Render pie chart
+              PieSeries<ExpenseData, String>(
+                dataSource: data,
+                // pointColorMapper: ,
+                xValueMapper: (ExpenseData data, _) => data.type,
+                yValueMapper: (ExpenseData data, _) => data.amount,
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
+                enableTooltip: true,
+              )
+            ])),
+      ]),
+    );
+  }
+}
+
+List<ExpenseData> chartsort(List<TransactionModel> model) {
+  double value;
+  String categoryname;
+  List visited = [];
+  List<ExpenseData> newData = [];
+
+  for (var i = 0; i < model.length; i++) {
+    visited.add(0);
+  }
+
+  for (var i = 0; i < model.length; i++) {
+    value = model[i].amount;
+    categoryname = model[i].category.name;
+
+    for (var j = i + 1; j < model.length; j++) {
+      if (model[i].category.name == model[j].category.name) {
+        value = value + model[j].amount;
+        visited[j] = -1;
+      }
+    }
+
+    if (visited[i] != -1) {
+      newData.add(ExpenseData(
+        type: categoryname,
+        amount: value,
+      ));
+    }
+  }
+
+  return newData;
+}
+
+class ExpenseData {
+  ExpenseData({
+    required this.type,
+    required this.amount,
+  });
+  final String? type;
+  final double amount;
+}
