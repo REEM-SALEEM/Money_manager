@@ -157,6 +157,31 @@ class TransactionDB implements TransactionDbFunctions {
     }
   }
 
+  sortedCustom(DateTime startDate, DateTime endDate) async {
+    incomeFilterlist.value.clear();
+    expenseFilterlist.value.clear();
+    filterListNotifier.value.clear();
+    //
+    for (TransactionModel i in transactionListNotifier.value) {
+      if (i.date.day >= startDate.day &&
+          i.date.day <= endDate.day &&
+          i.date.month >= startDate.month &&
+          i.date.month <= endDate.month &&
+          i.category.type == CategoryType.income) {
+        incomeFilterlist.value.add(i);
+        filterListNotifier.value.add(i);
+      } //
+      else if (i.date.day >= startDate.day &&
+          i.date.day <= endDate.day &&
+          i.date.month >= startDate.month &&
+          i.date.month <= endDate.month &&
+          i.category.type == CategoryType.expense) {
+        expenseFilterlist.value.add(i);
+        filterListNotifier.value.add(i);
+      }
+    }
+  }
+
   @override
   Future<void> transactionClear() async {
     final transactionDB =

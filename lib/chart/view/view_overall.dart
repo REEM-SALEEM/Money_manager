@@ -13,6 +13,12 @@ class OverallList extends StatefulWidget {
   State<OverallList> createState() => _OverallListState();
 }
 
+TransactionModel? dat;
+DateTimeRange? picked;
+DateTime? startDate;
+DateTime? endDate;
+DateTimeRange? newRange;
+
 String dropdownValue = 'All';
 List<String> items = ['All', 'Today', 'Yesterday', 'Month', 'Custom'];
 
@@ -55,6 +61,10 @@ class _OverallListState extends State<OverallList> {
                       setState(
                         () {
                           dropdownValue = value!;
+                          dropdownValue == 'Custom'
+                              ? _selectDate(context)
+                              : TransactionDB.instance
+                                  .filterList(dropdownValue);
                           TransactionDB.instance.filterList(dropdownValue);
                         },
                       );
@@ -192,6 +202,29 @@ class _OverallListState extends State<OverallList> {
         ),
       ),
     );
+  }
+
+  _selectDate(BuildContext context) async {
+    final initialDate = DateTimeRange(
+        start: DateTime.now().add(const Duration(days: -2)),
+        end: DateTime.now());
+    picked = (await showDateRangePicker(
+      context: context,
+      initialDateRange: newRange ?? initialDate,
+      firstDate: DateTime(2022),
+      lastDate: DateTime.now(),
+    ));
+    setState(() {
+      if (picked == null) {
+        return;
+      } else {
+        newRange = picked!;
+        startDate = newRange!.start;
+        endDate = newRange!.end;
+      }
+      TransactionDB.instance.sortedCustom(startDate!, endDate!);
+      picked == null;
+    });
   }
 
 //*Date Format

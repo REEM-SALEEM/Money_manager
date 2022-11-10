@@ -13,6 +13,12 @@ class ExpenseList extends StatefulWidget {
   State<ExpenseList> createState() => _ExpenseListState();
 }
 
+TransactionModel? dat;
+DateTimeRange? picked;
+DateTime? startDate;
+DateTime? endDate;
+DateTimeRange? newRange;
+
 String dropdownValue = 'All';
 List<String> items = ['All', 'Today', 'Yesterday', 'Month', 'Custom'];
 
@@ -55,6 +61,10 @@ class _ExpenseListState extends State<ExpenseList> {
                       setState(
                         () {
                           dropdownValue = value!;
+                          dropdownValue == 'Custom'
+                              ? _selectDate(context)
+                              : TransactionDB.instance
+                                  .filterList(dropdownValue);
                           TransactionDB.instance.filterList(dropdownValue);
                         },
                       );
@@ -178,6 +188,32 @@ class _ExpenseListState extends State<ExpenseList> {
         ),
       ),
     );
+  }
+
+ _selectDate(BuildContext context) async {
+    //first date while we click custom
+    final initialDate = DateTimeRange(
+        start: DateTime.now().add(const Duration(days: -4)),
+        end: DateTime.now());
+    //picked date
+    picked = (await showDateRangePicker(
+      context: context,
+      //if picked is null then will execute _initialDate
+      initialDateRange: newRange ?? initialDate,
+      firstDate: DateTime(2022), 
+      lastDate: DateTime.now(),
+    ));
+    setState(() {
+      if (picked == null) {
+        return;
+      } else {
+        newRange = picked!;
+        // startDate = newRange!.start;
+        // endDate = newRange!.end;
+      }
+      TransactionDB.instance.sortedCustom(startDate!, endDate!);
+      picked == null;
+    });
   }
 
 //*Date Format
