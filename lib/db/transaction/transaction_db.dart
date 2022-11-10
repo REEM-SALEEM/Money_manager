@@ -10,7 +10,7 @@ abstract class TransactionDbFunctions {
   Future<void> addTransaction(TransactionModel obj);
   Future<void> deleteTransaction(String transactionID);
   Future<void> updateTransaction(int index, TransactionModel value);
-   Future<void> transactionClear();
+  Future<void> transactionClear();
 }
 
 class TransactionDB implements TransactionDbFunctions {
@@ -51,7 +51,7 @@ class TransactionDB implements TransactionDbFunctions {
     final transactionDB =
         await Hive.openBox<TransactionModel>(TRANSACTIONS_DB_NAME);
     transactionDB.putAt(index, value);
-    
+
     refresh();
   }
 
@@ -101,24 +101,29 @@ class TransactionDB implements TransactionDbFunctions {
   }
 
   DateTime? selected = DateTime.now();
-  Future<void> sortedList(DateTime _selected) async {
+
+//*Today & *Yesterday
+  Future<void> sortedList(DateTime selectedCustomeDate) async {
     incomeFilterlist.value.clear();
     expenseFilterlist.value.clear();
     filterListNotifier.value.clear();
-    for (TransactionModel data in transactionListNotifier.value) {
-      if (data.date.day == _selected.day &&
-          data.date.month == selected!.month &&
-          data.type == CategoryType.income) {
-        incomeFilterlist.value.add(data);
-        filterListNotifier.value.add(data);
+    //Checks  iterated objects date.day and month == today and yesterday
+    for (TransactionModel i in transactionListNotifier.value) {
+      if (i.date.day == selectedCustomeDate.day &&
+          i.date.month == selected!.month &&
+          i.type == CategoryType.income) {
+        //if yes add it to income list and filter list
+        incomeFilterlist.value.add(i);
+        filterListNotifier.value.add(i);
 
         filterListNotifier.notifyListeners();
         incomeFilterlist.notifyListeners();
-      } else if (data.date.day == _selected.day &&
-          data.date.month == selected!.month &&
-          data.type == CategoryType.expense) {
-        expenseFilterlist.value.add(data);
-        filterListNotifier.value.add(data);
+      } else if (i.date.day == selectedCustomeDate.day &&
+          i.date.month == selected!.month &&
+          i.type == CategoryType.expense) {
+        //if yes add it to expense list and filter list
+        expenseFilterlist.value.add(i);
+        filterListNotifier.value.add(i);
 
         filterListNotifier.notifyListeners();
         expenseFilterlist.notifyListeners();
@@ -126,21 +131,24 @@ class TransactionDB implements TransactionDbFunctions {
     }
   }
 
-  sortedMonth(DateTime _selected) async {
+  sortedMonth(DateTime selectedCustomeDate) async {
     incomeFilterlist.value.clear();
     expenseFilterlist.value.clear();
     filterListNotifier.value.clear();
-    for (TransactionModel datas in transactionListNotifier.value) {
-      if (datas.date.month == _selected.month &&
-          datas.category.type == CategoryType.income) {
-        incomeFilterlist.value.add(datas);
-        filterListNotifier.value.add(datas);
+    //Checks  iterated objects date.month == this month
+    for (TransactionModel i in transactionListNotifier.value) {
+      if (i.date.month == selectedCustomeDate.month &&
+          i.category.type == CategoryType.income) {
+        //if yes add it to income list and filter list
+        incomeFilterlist.value.add(i);
+        filterListNotifier.value.add(i);
 
         incomeFilterlist.notifyListeners();
         filterListNotifier.notifyListeners();
       } else {
-        expenseFilterlist.value.add(datas);
-        filterListNotifier.value.add(datas);
+        //if yes add it to expense list and filter list
+        expenseFilterlist.value.add(i);
+        filterListNotifier.value.add(i);
 
         filterListNotifier.notifyListeners();
         expenseFilterlist.notifyListeners();
@@ -148,11 +156,10 @@ class TransactionDB implements TransactionDbFunctions {
     }
   }
 
-
   @override
-  Future<void> transactionClear() async{
-      final transactionDB =
+  Future<void> transactionClear() async {
+    final transactionDB =
         await Hive.openBox<TransactionModel>(TRANSACTIONS_DB_NAME);
-        await transactionDB.clear();
+    await transactionDB.clear();
   }
 }

@@ -47,7 +47,9 @@ class _ExpenseListState extends State<ExpenseList> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.lightGreen),
+                  //----Dropdown Button
                   child: DropdownButton<String>(
+                    //Initially 'All'
                     value: dropdownValue,
                     onChanged: (String? value) async {
                       setState(

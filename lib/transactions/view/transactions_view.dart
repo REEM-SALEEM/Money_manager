@@ -13,6 +13,9 @@ class TransactionList extends StatefulWidget {
   State<TransactionList> createState() => _TransactionListState();
 }
 
+String dropdownValue = 'All';
+List<String> items = ['All', 'Today', 'Yesterday', 'Month', 'Custom'];
+
 class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
@@ -45,42 +48,33 @@ class _TransactionListState extends State<TransactionList> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.lightGreen),
-                    child: DropdownButton(
-                        iconEnabledColor: Colors.black,
-                        underline: Container(),
-                        hint: const Text(
-                          '   All ',
-                          style: TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                        ),
-                        items: const [
-                          DropdownMenuItem(
-                            value: 1,
-                            child: Text('Today'),
-                          ),
-                          DropdownMenuItem(
-                            value: 1,
-                            child: Text('Yesterday'),
-                          ),
-                          DropdownMenuItem(
-                            value: 1,
-                            child: Text('Month'),
-                          ),
-                          DropdownMenuItem(
-                            value: 1,
-                            child: Text('Custom'),
-                          )
-                        ],
-                        onChanged: (selectedValue) {
-                          // print(selectedValue);
-                        }),
+                    //----Dropdown Button
+                    child: DropdownButton<String>(
+                      //Initially 'All'
+                      value: dropdownValue,
+                      onChanged: (String? value) async {
+                        setState(
+                          () {
+                            dropdownValue = value!;
+                            TransactionDB.instance.filterList(dropdownValue);
+                          },
+                        );
+                      },
+                      items: items.map<DropdownMenuItem<String>>((items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(items),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
               ]),
               Expanded(
                 child: ValueListenableBuilder(
-                  valueListenable:
-                      TransactionDB.instance.transactionListNotifier,
+                  valueListenable: dropdownValue == 'All'?
+                      TransactionDB.instance.transactionListNotifier:
+                      TransactionDB.instance.filterListNotifier,
                   builder: (BuildContext ctx, List<TransactionModel> newList,
                       Widget? _) {
                     return ListView.builder(

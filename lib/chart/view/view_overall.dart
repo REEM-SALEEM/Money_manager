@@ -47,7 +47,9 @@ class _OverallListState extends State<OverallList> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Colors.lightGreen),
+                  //----Dropdown Button
                   child: DropdownButton<String>(
+                    //Initially 'All'
                     value: dropdownValue,
                     onChanged: (String? value) async {
                       setState(
@@ -69,9 +71,9 @@ class _OverallListState extends State<OverallList> {
             ]),
             Expanded(
               child: ValueListenableBuilder(
-                valueListenable:  dropdownValue == 'All'
-                      ? TransactionDB.instance.transactionListNotifier
-                      : TransactionDB.instance.filterListNotifier,
+                valueListenable: dropdownValue == 'All'
+                    ? TransactionDB.instance.transactionListNotifier
+                    : TransactionDB.instance.filterListNotifier,
                 builder: (BuildContext ctx, List<TransactionModel> newList,
                     Widget? _) {
                   return ListView.builder(
