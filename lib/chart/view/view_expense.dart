@@ -100,12 +100,14 @@ class _ExpenseListState extends State<ExpenseList> {
                                 ),
                                 SlidableAction(
                                   onPressed: (ctx) {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => ScreenEdits(
-                                                  transactionModel: value,
-                                                  index: index,
-                                                )));
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => ScreenEdits(
+                                          transactionModel: value,
+                                          index: index,
+                                        ),
+                                      ),
+                                    );
                                   },
                                   backgroundColor:
                                       // Color.fromARGB(255, 38, 113, 40),
@@ -155,7 +157,7 @@ class _ExpenseListState extends State<ExpenseList> {
                                   ' ₹ ${value.amount.toString()}',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w900,
-                                      color: Colors.red),
+                                      color: Colors.green),
                                 ),
                                 title: Text(
                                   value.category.name.toUpperCase(),
@@ -178,7 +180,7 @@ class _ExpenseListState extends State<ExpenseList> {
     );
   }
 
-  //*Date Format
+//*Date Format
   String parseDate(DateTime date) {
     final formattedDate = DateFormat.MMMd().format(date);
     final splittedDate = formattedDate.split(' ');

@@ -10,9 +10,8 @@ class ScreenWelcome extends StatefulWidget {
 }
 
 class _ScreenWelcomeState extends State<ScreenWelcome> {
-  String? savedName;
-  final TextEditingController _name =
-      TextEditingController(); //object created (a class that extends notify listeners).
+//object created (a class that extends notify listeners).
+  final TextEditingController _name = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -127,13 +126,5 @@ class _ScreenWelcomeState extends State<ScreenWelcome> {
     final sharedprefs = await SharedPreferences
         .getInstance(); //initialize object of shared preference
     await sharedprefs.setString('saved_name', _name.text);
-  }
-
-  // get the saved name
-  Future<void> getSavedData(BuildContext context) async {
-    final sharedprefs = await SharedPreferences.getInstance();
-    savedName = sharedprefs
-        .getString('saved_name'); //getter method - get the saved name by key
-    setState(() {});
   }
 }

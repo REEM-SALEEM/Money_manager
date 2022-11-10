@@ -72,9 +72,9 @@ class _TransactionListState extends State<TransactionList> {
               ]),
               Expanded(
                 child: ValueListenableBuilder(
-                  valueListenable: dropdownValue == 'All'?
-                      TransactionDB.instance.transactionListNotifier:
-                      TransactionDB.instance.filterListNotifier,
+                  valueListenable: dropdownValue == 'All'
+                      ? TransactionDB.instance.transactionListNotifier
+                      : TransactionDB.instance.filterListNotifier,
                   builder: (BuildContext ctx, List<TransactionModel> newList,
                       Widget? _) {
                     return ListView.builder(
@@ -189,9 +189,10 @@ class _TransactionListState extends State<TransactionList> {
     );
   }
 
+  //*Date Format
   String parseDate(DateTime date) {
-    final datee = DateFormat.MMMd().format(date);
-    final splittedDate = datee.split(' ');
-    return '${splittedDate.last}\n${splittedDate.first}';
+    final formattedDate = DateFormat.MMMd().format(date);
+    final splittedDate = formattedDate.split(' ');
+    return '  ${splittedDate.last}\n ${splittedDate.first}';
   }
 }

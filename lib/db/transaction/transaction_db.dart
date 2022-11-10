@@ -9,7 +9,7 @@ abstract class TransactionDbFunctions {
   Future<List<TransactionModel>> getAllTransactions();
   Future<void> addTransaction(TransactionModel obj);
   Future<void> deleteTransaction(String transactionID);
-  Future<void> updateTransaction(int index, TransactionModel value);
+  Future<void> updateTransaction(TransactionModel value);
   Future<void> transactionClear();
 }
 
@@ -47,11 +47,11 @@ class TransactionDB implements TransactionDbFunctions {
   }
 
   @override
-  Future<void> updateTransaction(int index, TransactionModel value) async {
+  Future<void> updateTransaction(TransactionModel value) async {
     final transactionDB =
         await Hive.openBox<TransactionModel>(TRANSACTIONS_DB_NAME);
-    transactionDB.putAt(index, value);
-
+    transactionDB.put(value.id, value);
+    transactionListNotifier.value.clear();
     refresh();
   }
 
@@ -103,13 +103,13 @@ class TransactionDB implements TransactionDbFunctions {
   DateTime? selected = DateTime.now();
 
 //*Today & *Yesterday
-  Future<void> sortedList(DateTime selectedCustomeDate) async {
+  Future<void> sortedList(DateTime selectedCustomDate) async {
     incomeFilterlist.value.clear();
     expenseFilterlist.value.clear();
     filterListNotifier.value.clear();
     //Checks  iterated objects date.day and month == today and yesterday
     for (TransactionModel i in transactionListNotifier.value) {
-      if (i.date.day == selectedCustomeDate.day &&
+      if (i.date.day == selectedCustomDate.day &&
           i.date.month == selected!.month &&
           i.type == CategoryType.income) {
         //if yes add it to income list and filter list
@@ -118,7 +118,7 @@ class TransactionDB implements TransactionDbFunctions {
 
         filterListNotifier.notifyListeners();
         incomeFilterlist.notifyListeners();
-      } else if (i.date.day == selectedCustomeDate.day &&
+      } else if (i.date.day == selectedCustomDate.day &&
           i.date.month == selected!.month &&
           i.type == CategoryType.expense) {
         //if yes add it to expense list and filter list
@@ -131,13 +131,13 @@ class TransactionDB implements TransactionDbFunctions {
     }
   }
 
-  sortedMonth(DateTime selectedCustomeDate) async {
+  sortedMonth(DateTime selectedCustomDate) async {
     incomeFilterlist.value.clear();
     expenseFilterlist.value.clear();
     filterListNotifier.value.clear();
     //Checks  iterated objects date.month == this month
     for (TransactionModel i in transactionListNotifier.value) {
-      if (i.date.month == selectedCustomeDate.month &&
+      if (i.date.month == selectedCustomDate.month &&
           i.category.type == CategoryType.income) {
         //if yes add it to income list and filter list
         incomeFilterlist.value.add(i);
@@ -145,13 +145,14 @@ class TransactionDB implements TransactionDbFunctions {
 
         incomeFilterlist.notifyListeners();
         filterListNotifier.notifyListeners();
-      } else {
+      } else if (i.date.month == selectedCustomDate.month &&
+          i.category.type == CategoryType.expense) {
         //if yes add it to expense list and filter list
         expenseFilterlist.value.add(i);
         filterListNotifier.value.add(i);
 
-        filterListNotifier.notifyListeners();
         expenseFilterlist.notifyListeners();
+        filterListNotifier.notifyListeners();
       }
     }
   }

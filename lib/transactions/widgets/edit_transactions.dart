@@ -191,7 +191,7 @@ class _ScreenEditsState extends State<ScreenEdits> {
                               backgroundColor: Colors.black,
                             ),
                             onPressed: (() async {
-                            await update(widget.index, widget.transactionModel.purpose);
+                            await update(widget.transactionModel.id!, widget.transactionModel.purpose);
                             }),
                             child: const Text(
                               'UPDATE',
@@ -207,7 +207,7 @@ class _ScreenEditsState extends State<ScreenEdits> {
     );
   }
 
-  update(int index, String value) {
+  update(String id, String value) {
     final modelupdate = TransactionModel(
       amount: double.tryParse(_amountEditing.text)!,
       purpose: _purposeEditing.text,
@@ -219,7 +219,7 @@ class _ScreenEditsState extends State<ScreenEdits> {
        
     );
     setState(() {
-      TransactionDB.instance.updateTransaction(index,modelupdate);
+      TransactionDB.instance.updateTransaction(modelupdate);
     });
 
     setState(() {
