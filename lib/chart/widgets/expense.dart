@@ -51,48 +51,47 @@ class _ScreenExpenseChartState extends State<ScreenExpenseChart> {
         Padding(
             padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 08),
             child: SfCircularChart(
-                 legend: Legend(
-                      borderWidth: 6,
-                      isVisible: true,
-                      textStyle: const TextStyle(color: Colors.white)
-                    ),
-              series: <PieSeries>[
-              // Render pie chart
-              PieSeries<ExpenseData, String>(
-                dataSource: data,
-                // pointColorMapper: ,
-                xValueMapper: (ExpenseData data, _) => data.type,
-                yValueMapper: (ExpenseData data, _) => data.amount,
-                dataLabelSettings: const DataLabelSettings(isVisible: true),
-                enableTooltip: true,
-              )
-            ])),
+                legend: Legend(
+                    borderWidth: 6,
+                    isVisible: true,
+                    textStyle: const TextStyle(color: Colors.white)),
+                series: <PieSeries>[
+                  PieSeries<ExpenseData, String>(
+                    dataSource: data,
+                    xValueMapper: (ExpenseData data, _) => data.type,
+                    yValueMapper: (ExpenseData data, _) => data.amount,
+                    dataLabelSettings: const DataLabelSettings(isVisible: true),
+                    enableTooltip: true,
+                  )
+                ])),
       ]),
     );
   }
 }
 
+//*Expense Chart
 List<ExpenseData> chartsort(List<TransactionModel> model) {
   double value;
   String categoryname;
   List visited = [];
   List<ExpenseData> newData = [];
-
+//array cant be null.
   for (var i = 0; i < model.length; i++) {
     visited.add(0);
   }
-
+//iterator will store the amt and catname to a variable
   for (var i = 0; i < model.length; i++) {
     value = model[i].amount;
     categoryname = model[i].category.name;
 
+//compare with the ith index catname if yes add both amount together
     for (var j = i + 1; j < model.length; j++) {
       if (model[i].category.name == model[j].category.name) {
         value = value + model[j].amount;
         visited[j] = -1;
       }
     }
-
+//storing in new aaray
     if (visited[i] != -1) {
       newData.add(ExpenseData(
         type: categoryname,

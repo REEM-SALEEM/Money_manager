@@ -237,9 +237,12 @@ class _ScreenSettingState extends State<ScreenSetting> {
     );
   }
 
+//*Reset
   Future<void> clearAppData() async {
+    //clear shared preference
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear;
+    //clear transaction and category
     await TransactionDB.instance.transactionClear();
     await CategoryDB.instance.categoryClear();
     Restart.restartApp();
