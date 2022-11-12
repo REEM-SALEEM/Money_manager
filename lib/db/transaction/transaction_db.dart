@@ -85,8 +85,31 @@ class TransactionDB implements TransactionDbFunctions {
     transactionDB.delete(transactionID);
     refresh();
   }
-
-  filterList(String selected) async {
+//***Category filter 
+  filterCategory(String selected) async {
+    incomeFilterlist.value.clear();
+    expenseFilterlist.value.clear();
+    filterListNotifier.value.clear();
+    if (selected == 'Income') {
+      for (TransactionModel i in transactionListNotifier.value) {
+        if (i.type == CategoryType.income) {
+          incomeFilterlist.value.add(i);
+          filterListNotifier.value.add(i);
+          incomeFilterlist.notifyListeners();
+        }
+      }
+    } else if (selected == 'Expense') {
+      for (TransactionModel i in transactionListNotifier.value) {
+        if (i.type == CategoryType.expense) {
+          expenseFilterlist.value.add(i);
+          filterListNotifier.value.add(i);
+          expenseFilterlist.notifyListeners();
+        }
+      }
+    }
+  }
+//------------------------------------------
+  filterList(String selected)async {
     DateTime now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = DateTime(now.year, now.month, now.day - 1);

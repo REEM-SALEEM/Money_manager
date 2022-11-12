@@ -28,28 +28,6 @@ class _ScreenOverallState extends State<ScreenOverall> {
       backgroundColor: const Color.fromARGB(255, 41, 42, 41),
       body: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const OverallList(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.arrow_right_alt,
-              color: Colors.white,
-            ),
-            label: const Text(
-              'View All',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-            ),
-          ),
-        ),
-        Padding(
             padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 08),
             child: SfCircularChart(
                 legend: Legend(
