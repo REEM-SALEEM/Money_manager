@@ -113,9 +113,12 @@ class _ScreenTransactionsState extends State<ScreenTransactions> {
                                 setState(() {
                                   TransactionDB.instance
                                       .deleteTransaction(value.id!);
-                                       showTopSnackBar(context,
-                          const CustomSnackBar.error(message: "Data Deleted Successfully"),
-                          displayDuration: const Duration(seconds: 2));
+                                  showTopSnackBar(
+                                      context,
+                                      const CustomSnackBar.error(
+                                          message: "Data Deleted Successfully"),
+                                      displayDuration:
+                                          const Duration(seconds: 2));
                                 });
                               },
                               backgroundColor:

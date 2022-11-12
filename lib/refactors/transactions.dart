@@ -60,14 +60,6 @@ class _TransactionsRefState extends State<TransactionsRef> {
               ),
             ),
           ]),
-          // const Padding(padding: EdgeInsets.fromLTRB(190, 0, 0, 0)),
-          // Container(
-          //   width: 45,
-          //   height: 45,
-          //   decoration: BoxDecoration(
-          //       color: Colors.grey, borderRadius: BorderRadius.circular(50)),
-          //   child: const Icon(Icons.notifications_active_outlined),
-          // )
         ]),
         const SizedBox(height: 23),
         ValueListenableBuilder(
