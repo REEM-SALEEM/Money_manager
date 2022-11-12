@@ -138,7 +138,8 @@ class _AddTransactionsState extends State<AddTransactions> {
                                   BorderRadius.all(Radius.circular(60)),
                             ),
                             child: Center(
-                              child: DropdownButtonFormField<String>(
+                              child: DropdownButton<String>(
+                                underline: Column(),
                                 alignment: AlignmentDirectional.centerStart,
                                 hint: const Text('  SELECT CATEGORY',
                                     style: TextStyle(

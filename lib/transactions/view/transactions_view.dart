@@ -58,7 +58,7 @@ class _TransactionListState extends State<TransactionList> {
                         color: Colors.black),
                     child: DropdownButton<String>(
                       underline: Column(),
-                      //Initially 'All'
+                      //Initially 'Overall'
                       value: dp,
                       onChanged: (value) async {
                         setState(
