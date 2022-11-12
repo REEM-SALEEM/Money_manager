@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/category/widgets/income_popup.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../db/category/category_db.dart';
 import '../../model/category/category_model.dart';
 
@@ -53,7 +55,7 @@ class _IncomeState extends State<Income> {
                           ),
                           trailing: IconButton(
                             onPressed: () {
-                              CategoryDB.instance.deleteCategory(category.id);
+                              deletePopup(category.id);
                             },
                             icon: const Icon(
                               Icons.delete_outline,
@@ -72,5 +74,51 @@ class _IncomeState extends State<Income> {
             backgroundColor: Colors.black,
             foregroundColor: const Color.fromARGB(255, 184, 252, 121),
             child: const Icon(Icons.add, size: 30)));
+  }
+
+  deletePopup(String id) async {
+    showDialog(
+      context: context,
+      builder: ((context) {
+        return SimpleDialog(backgroundColor: Colors.black, children: [
+          const Center(
+            child: Text(
+              'Are you sure you want to delete?',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      CategoryDB.instance.deleteCategory(id);
+                      Navigator.of(context).pop(context);
+                      showTopSnackBar(context,
+                          const CustomSnackBar.error(message: "Deleted"),
+                          displayDuration: const Duration(seconds: 2));
+                    },
+                    child: const Text('yes')),
+                const SizedBox(
+                  width: 5,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        Navigator.of(context).pop(context);
+                      });
+                    },
+                    child: const Text('Cancel')),
+              ],
+            ),
+          )
+        ]);
+      }),
+    );
   }
 }

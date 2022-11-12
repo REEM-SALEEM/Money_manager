@@ -35,40 +35,32 @@ class _ScreenSettingState extends State<ScreenSetting> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-              child: Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                      blurRadius: 7.0,
-                      offset: Offset(6.0, 6.0),
-                    )
-                  ],
-                  border: Border.all(color: Colors.grey, width: 1),
-                ),
-                padding: const EdgeInsets.all(10),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.refresh,
-                    size: 30,
+              child: InkWell(
+                onTap: () {
+                  resetPopup(context);
+                },
+                child: Container(
+                  height: 70,
+                  decoration: BoxDecoration(
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 7.0,
+                        offset: Offset(6.0, 6.0),
+                      )
+                    ],
+                    border: Border.all(color: Colors.grey, width: 1),
                   ),
-                  iconColor: Colors.white,
-                  title: const Text(
-                    'Reset App',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                  trailing: Switch(
-                    value: vals,
-                    onChanged: (value) {
-                      setState(() {
-                        vals = value;
-                        if (value == true) {
-                          resetPopup(context);
-                        } else {
-                          value == false;
-                        }
-                      });
-                    },
+                  padding: const EdgeInsets.all(10),
+                  child: const ListTile(
+                    leading: Icon(
+                      Icons.refresh,
+                      size: 30,
+                    ),
+                    iconColor: Colors.white,
+                    title: Text(
+                      'Reset App',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
                   ),
                 ),
               ),
@@ -186,6 +178,7 @@ class _ScreenSettingState extends State<ScreenSetting> {
     );
   }
 
+//*Reset popup
   resetPopup(BuildContext context) {
     showDialog(
       context: context,

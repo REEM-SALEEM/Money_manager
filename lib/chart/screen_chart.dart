@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/chart/widgets/expense.dart';
 import 'package:money_manager/chart/widgets/income.dart';
-import 'package:money_manager/chart/widgets/overall.dart';
 
 class ScreenChart extends StatelessWidget {
   const ScreenChart({super.key});
@@ -9,7 +8,7 @@ class ScreenChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 41, 42, 41),
         appBar: AppBar(
@@ -17,8 +16,6 @@ class ScreenChart extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.black,
           bottom: const TabBar(labelPadding: EdgeInsets.all(10), tabs: [
-            Text('OVERALL',
-                style: TextStyle(fontSize: 17, color: Colors.white)),
             Text('INCOME', style: TextStyle(fontSize: 17, color: Colors.white)),
             Text('EXPENSE',
                 style: TextStyle(fontSize: 17, color: Colors.white)),
@@ -27,7 +24,6 @@ class ScreenChart extends StatelessWidget {
         body: const SizedBox(
           width: 400,
           child: TabBarView(physics: BouncingScrollPhysics(), children: [
-            ScreenOverall(),
             ScreenIncomeChart(),
             ScreenExpenseChart(),
           ]),
