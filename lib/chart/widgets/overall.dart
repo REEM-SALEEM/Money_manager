@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:money_manager/chart/view/view_overall.dart';
 import 'package:money_manager/model/category/category_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../db/transaction/transaction_db.dart';
