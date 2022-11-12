@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../db/transaction/transaction_db.dart';
 import '../../model/category/category_model.dart';
 import '../../model/transaction/transaction_model.dart';
@@ -142,6 +144,13 @@ class _TransactionListState extends State<TransactionList> {
                                     onPressed: (ctx) {
                                       TransactionDB.instance
                                           .deleteTransaction(value.id!);
+                                      showTopSnackBar(
+                                          context,
+                                          const CustomSnackBar.error(
+                                              message:
+                                                  "Data Deleted Successfully"),
+                                          displayDuration:
+                                              const Duration(seconds: 2));
                                     },
                                     backgroundColor:
                                         const Color.fromARGB(255, 216, 59, 47),
@@ -228,6 +237,13 @@ class _TransactionListState extends State<TransactionList> {
                                     onPressed: (ctx) {
                                       TransactionDB.instance
                                           .deleteTransaction(value.id!);
+                                      showTopSnackBar(
+                                          context,
+                                          const CustomSnackBar.error(
+                                              message:
+                                                  "Data Deleted Successfully"),
+                                          displayDuration:
+                                              const Duration(seconds: 2));
                                     },
                                     backgroundColor:
                                         const Color.fromARGB(255, 216, 59, 47),
@@ -313,6 +329,13 @@ class _TransactionListState extends State<TransactionList> {
                                     onPressed: (ctx) {
                                       TransactionDB.instance
                                           .deleteTransaction(value.id!);
+                                      showTopSnackBar(
+                                          context,
+                                          const CustomSnackBar.error(
+                                              message:
+                                                  "Data Deleted Successfully"),
+                                          displayDuration:
+                                              const Duration(seconds: 2));
                                     },
                                     backgroundColor:
                                         const Color.fromARGB(255, 216, 59, 47),

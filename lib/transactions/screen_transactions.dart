@@ -8,6 +8,8 @@ import 'package:money_manager/transactions/widgets/edit_transactions.dart';
 import 'package:money_manager/db/category/category_db.dart';
 import 'package:money_manager/db/transaction/transaction_db.dart';
 import 'package:money_manager/model/category/category_model.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../model/transaction/transaction_model.dart';
 import 'widgets/add_transactions.dart';
@@ -111,6 +113,9 @@ class _ScreenTransactionsState extends State<ScreenTransactions> {
                                 setState(() {
                                   TransactionDB.instance
                                       .deleteTransaction(value.id!);
+                                       showTopSnackBar(context,
+                          const CustomSnackBar.error(message: "Data Deleted Successfully"),
+                          displayDuration: const Duration(seconds: 2));
                                 });
                               },
                               backgroundColor:
