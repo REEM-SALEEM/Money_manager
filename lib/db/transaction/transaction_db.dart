@@ -85,7 +85,8 @@ class TransactionDB implements TransactionDbFunctions {
     transactionDB.delete(transactionID);
     refresh();
   }
-//***Category filter 
+
+//***Category filter
   filterCategory(String selected) async {
     incomeFilterlist.value.clear();
     expenseFilterlist.value.clear();
@@ -108,8 +109,9 @@ class TransactionDB implements TransactionDbFunctions {
       }
     }
   }
+
 //------------------------------------------
-  filterList(String selected)async {
+  filterList(String selected) async {
     DateTime now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = DateTime(now.year, now.month, now.day - 1);
@@ -118,8 +120,6 @@ class TransactionDB implements TransactionDbFunctions {
       return sortedList(today);
     } else if (selected == 'Yesterday') {
       return sortedList(yesterday);
-    } else if (selected == 'Month') {
-      return sortedMonth(today);
     }
   }
 
@@ -154,31 +154,31 @@ class TransactionDB implements TransactionDbFunctions {
     }
   }
 
-  sortedMonth(DateTime selectedCustomDate) async {
-    incomeFilterlist.value.clear();
-    expenseFilterlist.value.clear();
-    filterListNotifier.value.clear();
-    //Checks  iterated objects date.month == this month
-    for (TransactionModel i in transactionListNotifier.value) {
-      if (i.date.month == selectedCustomDate.month &&
-          i.category.type == CategoryType.income) {
-        //if yes add it to income list and filter list
-        incomeFilterlist.value.add(i);
-        filterListNotifier.value.add(i);
+  // sortedMonth(DateTime selectedCustomDate) async {
+  //   incomeFilterlist.value.clear();
+  //   expenseFilterlist.value.clear();
+  //   filterListNotifier.value.clear();
+  //   //Checks  iterated objects date.month == this month
+  //   for (TransactionModel i in transactionListNotifier.value) {
+  //     if (i.date.month == selectedCustomDate.month &&
+  //         i.category.type == CategoryType.income) {
+  //       //if yes add it to income list and filter list
+  //       incomeFilterlist.value.add(i);
+  //       filterListNotifier.value.add(i);
 
-        incomeFilterlist.notifyListeners();
-        filterListNotifier.notifyListeners();
-      } else if (i.date.month == selectedCustomDate.month &&
-          i.category.type == CategoryType.expense) {
-        //if yes add it to expense list and filter list
-        expenseFilterlist.value.add(i);
-        filterListNotifier.value.add(i);
+  //       incomeFilterlist.notifyListeners();
+  //       filterListNotifier.notifyListeners();
+  //     } else if (i.date.month == selectedCustomDate.month &&
+  //         i.category.type == CategoryType.expense) {
+  //       //if yes add it to expense list and filter list
+  //       expenseFilterlist.value.add(i);
+  //       filterListNotifier.value.add(i);
 
-        expenseFilterlist.notifyListeners();
-        filterListNotifier.notifyListeners();
-      }
-    }
-  }
+  //       expenseFilterlist.notifyListeners();
+  //       filterListNotifier.notifyListeners();
+  //     }
+  //   }
+  // }
 
   sortedCustom(DateTime startDate, DateTime endDate) async {
     incomeFilterlist.value.clear();
@@ -204,6 +204,33 @@ class TransactionDB implements TransactionDbFunctions {
       }
     }
   }
+
+  // monthlist(String selected) async {
+  //   DateTime now = DateTime.now();
+  //   final  twelve = DateTime(now.year, now.month);
+  //   final eleven = DateTime(now.year, now.month-1);
+
+  //   if (selected == 'this month') {
+  //     return sortedMonth(twelve);
+  //   } else if (selected == 'Yesterday') {
+  //     return sortedMonth(eleven);
+  //   }
+  // }
+
+  // sortedMonth(String other) async {
+  //   incomeFilterlist.value.clear();
+  //   expenseFilterlist.value.clear();
+  //   filterListNotifier.value.clear();
+  //   for (TransactionModel i in transactionListNotifier.value) {
+  //     if (i.date.month.toString() == other && i.type == CategoryType.income) {
+  //       incomeFilterlist.value.add(i);
+  //       filterListNotifier.value.add(i);
+  //     }else if(i.date.month.toString() == other && i.type == CategoryType.expense){
+  //        expenseFilterlist.value.add(i);
+  //       filterListNotifier.value.add(i);
+  //     }
+  //   }
+  // }
 
   @override
   Future<void> transactionClear() async {

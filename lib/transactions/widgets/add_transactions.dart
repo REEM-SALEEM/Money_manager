@@ -188,7 +188,7 @@ class _AddTransactionsState extends State<AddTransactions> {
                                       context: context,
                                       initialDate: DateTime.now(),
                                       firstDate: DateTime.now().subtract(
-                                        const Duration(days: 30),
+                                        const Duration(days: 365),
                                       ),
                                       lastDate: DateTime.now());
                                   //if Date is not selected
