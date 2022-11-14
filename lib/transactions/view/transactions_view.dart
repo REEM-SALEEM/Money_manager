@@ -130,7 +130,6 @@ class _TransactionListState extends State<TransactionList> {
                           return ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
-                              final mon = newList[index];
                               return Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,

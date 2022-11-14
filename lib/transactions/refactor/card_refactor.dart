@@ -62,8 +62,7 @@ class _CardRefactorState extends State<CardRefactor> {
                         index: widget.indexedit,
                       )));
             },
-            backgroundColor:
-                const Color.fromARGB(255, 45, 117, 176),
+            backgroundColor: const Color.fromARGB(255, 45, 117, 176),
             icon: Icons.edit,
             label: 'Edit',
           )
@@ -117,8 +116,12 @@ class _CardRefactorState extends State<CardRefactor> {
           ),
           subtitle: Text(
             ' ₹ ${widget.amount.toString()}',
-            style: const TextStyle(
-                fontSize: 15, fontWeight: FontWeight.w900, color: Colors.green),
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w900,
+                color: widget.type == CategoryType.income
+                    ? Colors.green
+                    : Colors.red),
           ),
           title: Text(
             widget.catname.toUpperCase(),
