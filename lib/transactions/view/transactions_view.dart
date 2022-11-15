@@ -24,7 +24,7 @@ String dropdownValue = 'All';
 List<String> items = ['All', 'Today', 'Yesterday', 'Month', 'Custom'];
 
 class _TransactionListState extends State<TransactionList> {
-  bool _visible = true;
+
   @override
   Widget build(BuildContext context) {
     TransactionDB.instance.refresh();
@@ -313,8 +313,8 @@ class _TransactionListState extends State<TransactionList> {
         return;
       } else {
         newRange = picked!;
-        // startDate = newRange!.start;
-        // endDate = newRange!.end;
+        startDate = newRange!.start;
+        endDate = newRange!.end;
       }
       TransactionDB.instance.sortedCustom(startDate!, endDate!);
       picked == null;

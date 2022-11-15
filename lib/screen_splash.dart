@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:money_manager/screen_navbar.dart';
 import 'package:money_manager/screen_welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ScreenSplash extends StatelessWidget {
+class ScreenSplash extends StatefulWidget {
   const ScreenSplash({super.key});
 
+  @override
+  State<ScreenSplash> createState() => _ScreenSplashState();
+}
+
+class _ScreenSplashState extends State<ScreenSplash> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,11 +55,12 @@ class ScreenSplash extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const ScreenWelcome(),
-                          ),
-                        );
+                        checkLogin();
+                        // Navigator.of(context).pushReplacement(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const ScreenWelcome(),
+                        //   ),
+                        // );
                       },
                       child: const Text(
                         'Get Started',
@@ -70,5 +78,23 @@ class ScreenSplash extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> checkLogin() async {
+    final pref = await SharedPreferences.getInstance();
+    final loggedName = pref.getString('saved_name');
+    if (loggedName == null) {
+      await Future.delayed(const Duration(seconds: 4));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const ScreenWelcome()));
+    } else {
+      gotoLogin();
+    }
+  }
+
+  Future<void> gotoLogin() async {
+    await Future.delayed(const Duration(seconds: 1));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (ctx) => const BottomNavigationScreen()));
   }
 }
