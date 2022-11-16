@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_manager/model/category/category_model.dart';
 
-const CATEGORY_DB_NAME = 'category_database';
+const categorydbname = 'category_database';
 
 abstract class CategoryDbFunctions {
   Future<List<CategoryModel>> getCategories();
@@ -23,14 +23,14 @@ class CategoryDB implements CategoryDbFunctions {
   ValueNotifier<List<CategoryModel>> expenseCategoryList = ValueNotifier([]);
   @override
   Future<void> insertCategory(CategoryModel value) async {
-    final categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
+    final categoryDB = await Hive.openBox<CategoryModel>(categorydbname);
     await categoryDB.put(value.id, value);
     refreshUI();
   }
 
   @override
   Future<List<CategoryModel>> getCategories() async {
-    final categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
+    final categoryDB = await Hive.openBox<CategoryModel>(categorydbname);
     return categoryDB.values.toList();
   }
 
@@ -54,14 +54,15 @@ class CategoryDB implements CategoryDbFunctions {
 
   @override
   Future<void> deleteCategory(String categoryID) async {
-    final categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
+    final categoryDB = await Hive.openBox<CategoryModel>(categorydbname);
     categoryDB.delete(categoryID);
     refreshUI();
   }
 
   @override
   Future<dynamic> categoryClear() async {
-    final categoryDB = await Hive.openBox<CategoryModel>(CATEGORY_DB_NAME);
+    final categoryDB = await Hive.openBox<CategoryModel>(categorydbname);
     categoryDB.clear();
   }
 }
+

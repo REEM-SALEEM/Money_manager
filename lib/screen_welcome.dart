@@ -16,7 +16,7 @@ class _ScreenWelcomeState extends State<ScreenWelcome> {
 
   @override
   Widget build(BuildContext context) {
-      var mediaquery = MediaQuery.of(context);
+    var mediaquery = MediaQuery.of(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 41, 42, 41),
@@ -58,9 +58,7 @@ class _ScreenWelcomeState extends State<ScreenWelcome> {
                     ),
                   ]),
                 ]),
-                SizedBox(
-                  height: mediaquery.size.height * 0.2,
-                ),
+                const SizedBox(height: 170),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
                   child: Text(
