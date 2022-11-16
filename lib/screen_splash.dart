@@ -59,11 +59,6 @@ class _ScreenSplashState extends State<ScreenSplash> {
                         ),
                         onPressed: () {
                           checkLogin();
-                          // Navigator.of(context).pushReplacement(
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const ScreenWelcome(),
-                          //   ),
-                          // );
                         },
                         child: const Text(
                           'Get Started',
@@ -89,8 +84,10 @@ class _ScreenSplashState extends State<ScreenSplash> {
     final loggedName = pref.getString('saved_name');
     if (loggedName == null) {
       await Future.delayed(const Duration(seconds: 4));
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const ScreenWelcome()));
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const ScreenWelcome()));
+      }
     } else {
       gotoLogin();
     }
@@ -98,7 +95,9 @@ class _ScreenSplashState extends State<ScreenSplash> {
 
   Future<void> gotoLogin() async {
     await Future.delayed(const Duration(seconds: 1));
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (ctx) => const BottomNavigationScreen()));
+    if (mounted) {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (ctx) => const BottomNavigationScreen()));
+    }
   }
 }
