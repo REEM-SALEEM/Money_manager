@@ -20,12 +20,13 @@ class ScreenSetting extends StatefulWidget {
 class _ScreenSettingState extends State<ScreenSetting> {
   var vals = false;
   var vals1 = false;
-    static TimeOfDay initialTime = TimeOfDay.now();
+  static TimeOfDay initialTime = TimeOfDay.now();
   @override
   void initState() {
     super.initState();
     NotificationApi().init(initScheduled: true);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,10 +128,10 @@ class _ScreenSettingState extends State<ScreenSetting> {
                     border: Border.all(color: Colors.black, width: 1),
                   ),
                   padding: const EdgeInsets.fromLTRB(10, 7, 7, 7),
-                  child:  ListTile(
-                     onTap: () async {
-                          await timePicked(context);
-                        },
+                  child: ListTile(
+                    onTap: () async {
+                      await timePicked(context);
+                    },
                     leading: const Icon(
                       Icons.timelapse,
                       size: 32,
@@ -242,26 +243,27 @@ class _ScreenSettingState extends State<ScreenSetting> {
             ]);
       }),
     );
-}
- timePicked(BuildContext context) async {
+  }
+
+  timePicked(BuildContext context) async {
     final TimeOfDay? newTime = await showTimePicker(
       context: context,
       initialTime: initialTime,
       initialEntryMode: TimePickerEntryMode.dial,
     );
-    if (newTime != null && newTime != initialTime) {
-      {
-        NotificationApi.showScheduledNotifications(
-            body: "It's time to stay on track.",
-            scheduledTime: Time(newTime.hour, newTime.minute, 0),
-            payload: 'come on man',
-            title: ' Money');
-      }
+    if (newTime == null) {
+      return;
+    } else {
+      NotificationApi.showScheduledNotifications(
+        body: "It's time to stay on track.",
+        scheduledTime: Time(newTime.hour, newTime.minute, 0),
+        payload: 'come on man',
+      );
     }
     showTopSnackBar(
       context,
       const CustomSnackBar.success(
-        message: "Notification is Setted Succesfully",
+        message: "Notification is Setted",
       ),
     );
   }
@@ -271,8 +273,8 @@ class _ScreenSettingState extends State<ScreenSetting> {
   }
 
   onClickedNotification(String? payload) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const BottomNavigationScreen()));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const BottomNavigationScreen()));
   }
 
 //*Reset

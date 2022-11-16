@@ -79,7 +79,7 @@ class _ScreenTransactionsState extends State<ScreenTransactions> {
                   },
                   child: Row(
                     children: const [
-                      Icon(Icons.arrow_right_alt, color: Colors.white)
+                      Icon(Icons.arrow_right_alt, color: Colors.white),
                     ],
                   ),
                 ),

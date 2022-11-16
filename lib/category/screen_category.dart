@@ -12,7 +12,7 @@ class ScreenCategory extends StatefulWidget {
 }
 
 class _ScreenCategoryState extends State<ScreenCategory> {
-  @override 
+  @override
   void initState() {
     CategoryDB().refreshUI();
     super.initState();
@@ -32,16 +32,16 @@ class _ScreenCategoryState extends State<ScreenCategory> {
                 style: TextStyle(fontSize: 20, color: Colors.white)),
             backgroundColor: Colors.black),
         body: Container(
-          height: 605,
+          height: 705,
           width: 900,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(30.0),
                   topLeft: Radius.circular(30.0)),
-              color: Color.fromARGB(255, 17, 17, 17)),
+              color: Color.fromARGB(255, 17, 17, 17),
+              ),
           child: SingleChildScrollView(
             child: Column(children: [
-             
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 40, 8, 0),
                 child: Container(
@@ -51,7 +51,7 @@ class _ScreenCategoryState extends State<ScreenCategory> {
                       color: const Color.fromARGB(255, 87, 84, 84),
                       border: Border.all(color: Colors.black, width: 1),
                       borderRadius: BorderRadius.circular(11)),
-                      //----Tab bar
+                  //----Tab bar
                   child: TabBar(
                       labelColor: Colors.white,
                       indicator: BoxDecoration(
