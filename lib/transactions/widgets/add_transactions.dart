@@ -337,9 +337,10 @@ class _AddTransactionsState extends State<AddTransactions> {
       Navigator.of(context).pop();
     });
     TransactionDB.instance.refresh();
-
-    showTopSnackBar(
-        context, const CustomSnackBar.success(message: "Data Entered"),
-        displayDuration: const Duration(seconds: 2));
+    if (mounted) {
+      showTopSnackBar(
+          context, const CustomSnackBar.success(message: "Data Entered"),
+          displayDuration: const Duration(seconds: 2));
+    }
   }
 }

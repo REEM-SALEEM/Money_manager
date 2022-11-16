@@ -257,15 +257,17 @@ class _ScreenSettingState extends State<ScreenSetting> {
       NotificationApi.showScheduledNotifications(
         body: "It's time to stay on track.",
         scheduledTime: Time(newTime.hour, newTime.minute, 0),
-        payload: 'come on man',
+        payload: 'Reminder',
       );
     }
-    showTopSnackBar(
-      context,
-      const CustomSnackBar.success(
-        message: "Notification is Setted",
-      ),
-    );
+    if (mounted) {
+      showTopSnackBar(
+        context,
+        const CustomSnackBar.success(
+          message: "Reminder set successfully ",
+        ),
+      );
+    }
   }
 
   void listenNotifications() {
