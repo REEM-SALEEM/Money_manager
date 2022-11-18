@@ -27,6 +27,8 @@ class _AddTransactionsState extends State<AddTransactions> {
 
   @override
   void initState() {
+    TransactionDB.instance.refresh();
+    CategoryDB.instance.refreshUI();
     _selectedCategorytype = CategoryType.income;
     super.initState();
   }
@@ -80,7 +82,6 @@ class _AddTransactionsState extends State<AddTransactions> {
                             onChanged: (newValue) {
                               setState(() {
                                 _selectedCategorytype = CategoryType.income;
-                                //??????????????????
                                 _categoryID = null;
                               });
                             }),
@@ -97,7 +98,6 @@ class _AddTransactionsState extends State<AddTransactions> {
                             onChanged: (newValue) {
                               setState(() {
                                 _selectedCategorytype = CategoryType.expense;
-                                //??????????????????
                                 _categoryID = null;
                               });
                             }),
@@ -108,22 +108,20 @@ class _AddTransactionsState extends State<AddTransactions> {
                         ),
                       ]),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //----Add category +
-                          ElevatedButton.icon(
-                            onPressed: () {
-                              //????????????????????
-                              selectCategoryPopup(context);
-                            },
-                            icon: const Icon(Icons.add),
-                            label: const Text(
-                              'ADD CATEGORY',
-                              style: TextStyle(fontWeight: FontWeight.w900),
-                            ),
-                          )
-                        ],
-                      ),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //----Add category +
+                            ElevatedButton.icon(
+                              onPressed: () {
+                                selectCategoryPopup(context);
+                              },
+                              icon: const Icon(Icons.add),
+                              label: const Text(
+                                'ADD CATEGORY',
+                                style: TextStyle(fontWeight: FontWeight.w900),
+                              ),
+                            )
+                          ]),
                       const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -158,6 +156,7 @@ class _AddTransactionsState extends State<AddTransactions> {
                                     .value
                                     .map((e) {
                                   /*converting each object from category model list to dropdownmenuitems and return */
+
                                   return DropdownMenuItem(
                                     value: e.id,
                                     child: Text("  ${e.name}"),

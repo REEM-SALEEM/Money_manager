@@ -46,7 +46,7 @@ Future<void> selectCategoryPopup(BuildContext context) async {
 
                 CategoryDB.instance.insertCategory(overallcategory);
                 Navigator.of(ctx).pop();
-                          showTopSnackBar(context,
+                showTopSnackBar(context,
                     const CustomSnackBar.success(message: "Data Entered"),
                     displayDuration: const Duration(seconds: 2));
               },
@@ -86,9 +86,7 @@ class _RadioButtonState extends State<RadioButton> {
               onChanged: (value) {
                 selectedCategoryNotifier.value = value!;
                 selectedCategoryNotifier.notifyListeners();
-                setState(() {
-                  
-                });
+                setState(() {});
               });
         },
       ),
