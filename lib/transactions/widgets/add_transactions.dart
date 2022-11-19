@@ -252,9 +252,7 @@ class _AddTransactionsState extends State<AddTransactions> {
                       Center(
                         //----Add button
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.black,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: (() {
                             setState(
                               () {
@@ -283,8 +281,7 @@ class _AddTransactionsState extends State<AddTransactions> {
                             );
                           }),
                           child: const Text(
-                            'ADD',
-                            style: TextStyle(color: Colors.white),
+                            'ADD TRANSACTION',style: TextStyle(fontWeight: FontWeight.w900),
                           ),
                         ),
                       )

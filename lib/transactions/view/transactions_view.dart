@@ -24,7 +24,6 @@ String dropdownValue = 'All';
 List<String> items = ['All', 'Today', 'Yesterday', 'Month', 'Custom'];
 
 class _TransactionListState extends State<TransactionList> {
-
   @override
   Widget build(BuildContext context) {
     TransactionDB.instance.refresh();
@@ -56,7 +55,7 @@ class _TransactionListState extends State<TransactionList> {
                     height: 32,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.black),
+                        color: Colors.lightGreen),
                     child: DropdownButton<String>(
                       underline: Column(),
                       //Initially 'Overall'
@@ -75,7 +74,7 @@ class _TransactionListState extends State<TransactionList> {
                           child: Text(
                             " $catee",
                             style: const TextStyle(
-                                color: Colors.grey,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w900),
                           ),
                         );
@@ -111,7 +110,10 @@ class _TransactionListState extends State<TransactionList> {
                       items: items.map<DropdownMenuItem<String>>((items) {
                         return DropdownMenuItem(
                           value: items,
-                          child: Text(" $items"),
+                          child: Text(
+                            " $items",
+                            style: const TextStyle(fontWeight: FontWeight.w900),
+                          ),
                         );
                       }).toList(),
                     ),

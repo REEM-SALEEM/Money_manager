@@ -39,22 +39,31 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
       bottomNavigationBar: SizedBox(
         height: 70,
         child: BottomNavigationBar(
+          selectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home,
-                    size: 25, color: Color.fromARGB(255, 134, 255, 82)),
+                icon: Icon(
+                  Icons.home,
+                  size: 25,
+                ),
                 label: 'Home'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.pie_chart,
-                    size: 25, color: Color.fromARGB(255, 134, 255, 82)),
+                icon: Icon(
+                  Icons.pie_chart,
+                  size: 25,
+                ),
                 label: 'chart'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.category,
-                    size: 25, color: Color.fromARGB(255, 134, 255, 82)),
+                icon: Icon(
+                  Icons.category,
+                  size: 25,
+                ),
                 label: 'category'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.settings,
-                    size: 25, color: Color.fromARGB(255, 134, 255, 82)),
+                icon: Icon(
+                  Icons.settings,
+                  size: 25,
+                ),
                 label: 'settings'),
           ],
           backgroundColor: Colors.black,

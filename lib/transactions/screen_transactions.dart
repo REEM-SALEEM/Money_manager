@@ -55,7 +55,7 @@ class _ScreenTransactionsState extends State<ScreenTransactions> {
               textThird1: 'EXPENSE',
               textThird2: '- ₹ '),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
             child: Row(children: [
               const Text('RECENT TRANSACTIONS:',
                   style: TextStyle(
