@@ -107,118 +107,105 @@ class _AddTransactionsState extends State<AddTransactions> {
                               fontWeight: FontWeight.w900, fontSize: 18),
                         ),
                       ]),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            //----Add category +
-                            ElevatedButton.icon(
-                              onPressed: () {
-                                selectCategoryPopup(context);
-                              },
-                              icon: const Icon(Icons.add),
-                              label: const Text(
-                                'ADD CATEGORY',
-                                style: TextStyle(fontWeight: FontWeight.w900),
-                              ),
-                            )
-                          ]),
                       const SizedBox(height: 10),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          //----Select category
-                          Container(
-                            width: 147,
-                            height: 45,
-                            decoration: const BoxDecoration(
-                              color: Colors.black,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(60)),
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            //----Calender
+                            Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.green)),
+                              child: TextButton.icon(
+                                  onPressed: () async {
+                                    final selectedDateTemp =
+                                        await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime.now().subtract(
+                                              const Duration(days: 365),
+                                            ),
+                                            lastDate: DateTime.now());
+                                    //if Date is not selected
+                                    if (selectedDateTemp == null) {
+                                      return;
+                                    } else {
+                                      setState(() {
+                                        _selectedDate = selectedDateTemp;
+                                      });
+                                    }
+                                  },
+                                  icon: const Icon(Icons.date_range),
+                                  label: Text(_selectedDate == null
+                                      ? 'Select Date'
+                                      // "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"
+                                      : '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}')),
                             ),
-                            child: Center(
-                              child: DropdownButton<String>(
-                                underline: Column(),
-                                alignment: AlignmentDirectional.centerStart,
-                                hint: const Text('  SELECT CATEGORY',
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w900)),
-                                value: _categoryID,
-                                style: const TextStyle(color: Colors.green),
-                                items: (_selectedCategorytype ==
-                                            CategoryType.income
-                                        ? CategoryDB().incomeCategoryList
-                                        : CategoryDB().expenseCategoryList)
-                                    /*value = list of category model 
+                            const SizedBox(width: 20),
+                            //----Select category
+                            Container(
+                              width: 147,
+                              height: 45,
+                              decoration: const BoxDecoration(
+                                color: Colors.black,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(60)),
+                              ),
+                              child: Center(
+                                child: DropdownButton<String>(
+                                  underline: Column(),
+                                  alignment: AlignmentDirectional.centerStart,
+                                  hint: const Text('  SELECT CATEGORY',
+                                      style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w900)),
+                                  value: _categoryID,
+                                  style: const TextStyle(color: Colors.green),
+                                  items: (_selectedCategorytype ==
+                                              CategoryType.income
+                                          ? CategoryDB().incomeCategoryList
+                                          : CategoryDB().expenseCategoryList)
+                                      /*value = list of category model 
                                         .map = is used to create convert list to List of DropdownMenuItems*/
-                                    .value
-                                    .map((e) {
-                                  /*converting each object from category model list to dropdownmenuitems and return */
-
-                                  return DropdownMenuItem(
-                                    value: e.id,
-                                    child: Text("  ${e.name}"),
-                                    onTap: () {
-                                      selectedCategoryModel = e;
-                                    },
-                                  );
-                                }).toList(),
-                                onChanged: (selectedValue) {
-                                  setState(() {
-                                    _categoryID = selectedValue;
-                                  });
-                                },
-                                icon: const Icon(Icons.arrow_drop_down,
-                                    color: Colors.white),
-                                iconEnabledColor: Colors.black,
+                                      .value
+                                      .map((e) {
+                                    /*converting each object from category model list to dropdownmenuitems and return */
+                                    return DropdownMenuItem(
+                                      value: e.id,
+                                      child: Text("  ${e.name}"),
+                                      onTap: () {
+                                        selectedCategoryModel = e;
+                                      },
+                                    );
+                                  }).toList(),
+                                  onChanged: (selectedValue) {
+                                    setState(() {
+                                      _categoryID = selectedValue;
+                                    });
+                                  },
+                                  icon: const Icon(Icons.arrow_drop_down,
+                                      color: Colors.white),
+                                  iconEnabledColor: Colors.black,
+                                ),
                               ),
                             ),
-                          ),
-                          //----Calender
-                          Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.green)),
-                            child: TextButton.icon(
-                                onPressed: () async {
-                                  final selectedDateTemp = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime.now().subtract(
-                                        const Duration(days: 365),
-                                      ),
-                                      lastDate: DateTime.now());
-                                  //if Date is not selected
-                                  if (selectedDateTemp == null) {
-                                    return;
-                                  } else {
-                                    setState(() {
-                                      _selectedDate = selectedDateTemp;
-                                    });
-                                  }
+                            IconButton(
+                                onPressed: () {
+                                  selectCategoryPopup(context);
                                 },
-                                icon: const Icon(Icons.date_range),
-                                label: Text(_selectedDate == null
-                                    ? 'Select Date'
-                                    // "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"
-                                    : '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}')),
-                          ),
-                        ],
-                      ),
+                                icon: const Icon(Icons.add))
+                          ]),
                       const SizedBox(height: 20),
                       //----Amount
-                      const Text('AMOUNT',
-                          style: TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 5),
                       TextFormField(
                         controller: _amount,
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: 'Amount',
+                          labelText: 'Amount',
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -229,9 +216,6 @@ class _AddTransactionsState extends State<AddTransactions> {
                       ),
                       const SizedBox(height: 10),
                       //----Purpose
-                      const Text('PURPOSE',
-                          style: TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 5),
                       TextFormField(
                         controller: _purpose,
@@ -239,7 +223,7 @@ class _AddTransactionsState extends State<AddTransactions> {
                         minLines: 3,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: 'Purpose',
+                          labelText: 'Purpose',
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -281,7 +265,8 @@ class _AddTransactionsState extends State<AddTransactions> {
                             );
                           }),
                           child: const Text(
-                            'ADD TRANSACTION',style: TextStyle(fontWeight: FontWeight.w900),
+                            'ADD TRANSACTION',
+                            style: TextStyle(fontWeight: FontWeight.w900),
                           ),
                         ),
                       )

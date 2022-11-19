@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:money_manager/transactions/refactor/card_refactor.dart';
 import '../../db/transaction/transaction_db.dart';
 import '../../model/category/category_model.dart';
@@ -11,6 +12,37 @@ class TransactionList extends StatefulWidget {
   State<TransactionList> createState() => _TransactionListState();
 }
 
+bool _hasBeenPressed = false;
+bool _hasBeenPressed1 = false;
+
+List<String> monthsList = [
+  "JAN",
+  "FEB",
+  "MAR",
+  "APR",
+  "MAY",
+  "JUN",
+  "JUL",
+  "AUG",
+  "SEP",
+  "OCT",
+  "NOV",
+  "DEC"
+];
+List<String> matter = [
+  '1',
+  '2',
+  '3',
+  '4',
+  '5',
+  '6',
+  '7',
+  '8',
+  '9',
+  '10',
+  '11',
+  '12'
+];
 TransactionModel? dat;
 DateTimeRange? newRange;
 DateTimeRange? picked;
@@ -98,7 +130,6 @@ class _TransactionListState extends State<TransactionList> {
                         setState(
                           () {
                             dropdownValue = value!;
-
                             dropdownValue == 'Custom'
                                 ? _selectDate(context)
                                 : TransactionDB.instance
@@ -138,159 +169,79 @@ class _TransactionListState extends State<TransactionList> {
                                   children: [
                                     const SizedBox(width: 6),
                                     ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: _hasBeenPressed1
+                                              ? Colors.grey
+                                              : Colors.lightGreen,
+                                        ),
                                         onPressed: () {
                                           setState(() {
-                                            sortedMonth('1');
+                                            sortedMonth(matter[index]);
                                           });
                                         },
-                                        child: const Text('JAN')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            sortedMonth('2');
-                                          });
-                                        },
-                                        child: const Text('FEB')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            sortedMonth('3');
-                                          });
-                                        },
-                                        child: const Text('MAR')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            sortedMonth('4');
-                                          });
-                                        },
-                                        child: const Text('APR')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            sortedMonth('5');
-                                          });
-                                        },
-                                        child: const Text('MAY')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            sortedMonth('6');
-                                          });
-                                        },
-                                        child: const Text('JUNE')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            sortedMonth('7');
-                                          });
-                                        },
-                                        child: const Text('JULY')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            sortedMonth('8');
-                                          });
-                                        },
-                                        child: const Text('AUG')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            sortedMonth('9');
-                                          });
-                                        },
-                                        child: const Text('SEP')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                            sortedMonth('10');
-                                          });
-                                        },
-                                        child: const Text('OCT')),
-                                    const SizedBox(width: 6),
-                                    ElevatedButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                            sortedMonth('11');
-                                          });
-                                        },
-                                        child: const Text('NOV')),
-                                    const SizedBox(width: 6),
-                                    // Text(mon.date.month.toString()),
-                                    ElevatedButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                            sortedMonth('12');
-                                          });
-                                        },
-                                        child: const Text('DEC')),
-                                    const SizedBox(width: 6),
+                                        child: Text(
+                                            monthsList[index].toUpperCase())),
+                                    const SizedBox(width: 5),
                                   ]);
                             },
-                            itemCount: 1,
+                            itemCount: monthsList.length,
                           );
                         }),
                   )),
               Expanded(
                 child: ValueListenableBuilder(
-                  valueListenable: dropdownValue == 'All'
-                      ? TransactionDB.instance.transactionListNotifier
-                      : TransactionDB.instance.filterListNotifier,
-                  builder: (BuildContext ctx, List<TransactionModel> newList,
-                      Widget? _) {
-                    return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final value = newList[index];
-
-                          if (dp == 'Income' &&
-                              value.type == CategoryType.income) {
-                            return CardRefactor(
-                              date: value.date,
-                              amount: value.amount,
-                              catname: value.category.name,
-                              id: value.id,
-                              valueedit: value,
-                              indexedit: index,
-                              type: value.type,
-                            );
-                          } else if (dp == 'Expense' &&
-                              value.type == CategoryType.expense) {
-                            return CardRefactor(
-                              date: value.date,
-                              amount: value.amount,
-                              catname: value.category.name,
-                              id: value.id,
-                              valueedit: value,
-                              indexedit: index,
-                              type: value.type,
-                            );
-                          } else if (dp == 'Overall') {
-                            return CardRefactor(
-                              date: value.date,
-                              amount: value.amount,
-                              catname: value.category.name,
-                              id: value.id,
-                              valueedit: value,
-                              indexedit: index,
-                              type: value.type,
-                            );
-                          }
-                          return Column();
-                        },
-                        itemCount: newList.length);
-                  },
-                ),
+                    valueListenable: dropdownValue == 'All'
+                        ? TransactionDB.instance.transactionListNotifier
+                        : TransactionDB.instance.filterListNotifier,
+                    builder: (BuildContext ctx, List<TransactionModel> newList,
+                        Widget? _) {
+                      return newList.isEmpty
+                          ? Center(
+                              child: Lottie.asset(
+                                  "assets/lottie/629-empty-box.json"),
+                            )
+                          : ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                final value = newList[index];
+                                if (dp == 'Income' &&
+                                    value.type == CategoryType.income) {
+                                  return CardRefactor(
+                                    date: value.date,
+                                    amount: value.amount,
+                                    catname: value.category.name,
+                                    id: value.id,
+                                    valueedit: value,
+                                    indexedit: index,
+                                    type: value.type,
+                                  );
+                                } else if (dp == 'Expense' &&
+                                    value.type == CategoryType.expense) {
+                                  return CardRefactor(
+                                    date: value.date,
+                                    amount: value.amount,
+                                    catname: value.category.name,
+                                    id: value.id,
+                                    valueedit: value,
+                                    indexedit: index,
+                                    type: value.type,
+                                  );
+                                } else if (dp == 'Overall') {
+                                  return CardRefactor(
+                                    date: value.date,
+                                    amount: value.amount,
+                                    catname: value.category.name,
+                                    id: value.id,
+                                    valueedit: value,
+                                    indexedit: index,
+                                    type: value.type,
+                                  );
+                                }
+                                return Column();
+                              },
+                              itemCount: newList.length);
+                    }),
               )
             ],
           )),
