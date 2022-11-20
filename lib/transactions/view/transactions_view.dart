@@ -12,8 +12,7 @@ class TransactionList extends StatefulWidget {
   State<TransactionList> createState() => _TransactionListState();
 }
 
-bool _hasBeenPressed = false;
-bool _hasBeenPressed1 = false;
+bool _nana = false;
 
 List<String> monthsList = [
   "JAN",
@@ -29,7 +28,7 @@ List<String> monthsList = [
   "NOV",
   "DEC"
 ];
-List<String> matter = [
+List<String> parameter = [
   '1',
   '2',
   '3',
@@ -43,6 +42,21 @@ List<String> matter = [
   '11',
   '12'
 ];
+Map<int, bool> boollist = {
+  0: false,
+  1: false,
+  2: false,
+  3: false,
+  4: false,
+  5: false,
+  6: false,
+  7: false,
+  8: false,
+  9: false,
+  10: false,
+  11: false,
+  12: false
+};
 TransactionModel? dat;
 DateTimeRange? newRange;
 DateTimeRange? picked;
@@ -170,13 +184,18 @@ class _TransactionListState extends State<TransactionList> {
                                     const SizedBox(width: 6),
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: _hasBeenPressed1
-                                              ? Colors.grey
-                                              : Colors.lightGreen,
-                                        ),
+                                            backgroundColor: boollist[index]!
+                                                ? Colors.grey
+                                                : Colors.lightGreen),
                                         onPressed: () {
                                           setState(() {
-                                            sortedMonth(matter[index]);
+                                            boollist[index] = true;
+                                            sortedMonth(parameter[index]);
+                                          });
+                                          boollist.forEach((k, v) {
+                                            if (index != k) {
+                                              boollist[k] = false;
+                                            }
                                           });
                                         },
                                         child: Text(
