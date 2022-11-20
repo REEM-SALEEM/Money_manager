@@ -12,8 +12,6 @@ class TransactionList extends StatefulWidget {
   State<TransactionList> createState() => _TransactionListState();
 }
 
-bool _nana = false;
-
 List<String> monthsList = [
   "JAN",
   "FEB",
@@ -185,7 +183,7 @@ class _TransactionListState extends State<TransactionList> {
                                     ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor: boollist[index]!
-                                                ? Colors.grey
+                                                ? Colors.orange
                                                 : Colors.lightGreen),
                                         onPressed: () {
                                           setState(() {

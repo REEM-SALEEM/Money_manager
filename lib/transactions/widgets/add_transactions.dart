@@ -5,7 +5,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../db/category/category_db.dart';
 import '../../db/transaction/transaction_db.dart';
 import '../../model/transaction/transaction_model.dart';
-import '../view/popup_selectcategory.dart';
 
 class AddTransactions extends StatefulWidget {
   const AddTransactions({super.key});
@@ -13,7 +12,8 @@ class AddTransactions extends StatefulWidget {
   @override
   State<AddTransactions> createState() => _AddTransactionsState();
 }
-
+ValueNotifier<CategoryType> selectedCategoryNotifier =
+    ValueNotifier(CategoryType.income);
 class _AddTransactionsState extends State<AddTransactions> {
   //declaring value to store selected date
   DateTime? _selectedDate;
@@ -277,8 +277,67 @@ class _AddTransactionsState extends State<AddTransactions> {
         ),
       ),
     );
+    
   }
-
+Future<void> selectCategoryPopup(BuildContext context) async {
+  final TextEditingController categoryController = TextEditingController();
+  showDialog(
+    context: context,
+    builder: ((ctx) {
+      return SimpleDialog(
+        title: const Text('ADD CATEGORY'),
+        children: [
+          Row(mainAxisAlignment: MainAxisAlignment.start, children: const [
+            RadioButton(title: 'INCOME', type: CategoryType.income),
+            RadioButton(title: 'EXPENSE', type: CategoryType.expense),
+          ]),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: categoryController,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'add category...',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+              onPressed: () {
+                setState(() {
+                    final controller = categoryController.text;
+                if (controller.isEmpty) {
+                  return;
+                }
+                final type = selectedCategoryNotifier.value;
+                final overallcategory = CategoryModel(
+                    id: DateTime.now().microsecondsSinceEpoch.toString(),
+                    type: type,
+                    name: controller);
+                CategoryDB.instance.insertCategory(overallcategory);
+                CategoryDB.instance.expenseCategoryList.value;
+                CategoryDB.instance.incomeCategoryList.value;
+                CategoryDB.instance.refreshUI();
+                Navigator.of(ctx).pop();
+                showTopSnackBar(context,
+                    const CustomSnackBar.success(message: "Data Entered"),
+                    displayDuration: const Duration(seconds: 2));
+                });
+              
+              },
+              child: const Text(
+                'Submit',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          )
+        ],
+      );
+    }),
+  );
+}
 //*Add Transaction details.
   Future<void> addTransaction() async {
     final amountText = _amount.text;
@@ -323,5 +382,39 @@ class _AddTransactionsState extends State<AddTransactions> {
           context, const CustomSnackBar.success(message: "Data Entered"),
           displayDuration: const Duration(seconds: 2));
     }
+  }
+}
+
+
+class RadioButton extends StatefulWidget {
+  final String title;
+  final CategoryType type;
+
+  const RadioButton({super.key, required this.title, required this.type});
+
+  @override
+  State<RadioButton> createState() => _RadioButtonState();
+}
+
+class _RadioButtonState extends State<RadioButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [
+      const SizedBox(width: 10, height: 30),
+      ValueListenableBuilder(
+        valueListenable: selectedCategoryNotifier,
+        builder: (BuildContext ctx, CategoryType newcategory, Widget? _) {
+          return Radio<CategoryType>(
+              value: widget.type,
+              groupValue: newcategory,
+              onChanged: (value) {
+                selectedCategoryNotifier.value = value!;
+                selectedCategoryNotifier.notifyListeners();
+                setState(() {});
+              });
+        },
+      ),
+      Text(widget.title),
+    ]);
   }
 }
