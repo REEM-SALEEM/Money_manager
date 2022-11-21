@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:money_manager/model/category/category_model.dart';
+import 'package:money_manager/screen_onboarding.dart';
 import 'package:money_manager/screen_splash.dart';
 import 'model/transaction/transaction_model.dart';
 import 'package:timezone/data/latest.dart' as tz;
