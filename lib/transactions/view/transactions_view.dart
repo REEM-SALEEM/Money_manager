@@ -207,7 +207,7 @@ class _TransactionListState extends State<TransactionList> {
                   )),
               Expanded(
                 child: ValueListenableBuilder(
-                    valueListenable: dropdownValue == 'All' || dp == 'Overall'
+                    valueListenable: dropdownValue == 'All' 
                         ? TransactionDB.instance.transactionListNotifier
                         : TransactionDB.instance.filterListNotifier,
                     builder: (BuildContext ctx, List<TransactionModel> newList,

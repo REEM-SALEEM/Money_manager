@@ -11,63 +11,58 @@ class ScreenOverall extends StatefulWidget {
   State<ScreenOverall> createState() => _ScreenOverallState();
 }
 
-String dropdownValue = 'All';
-List<String> items = ['All', 'Today', 'Yesterday'];
-
 class _ScreenOverallState extends State<ScreenOverall> {
   @override
   void initState() {
-    TransactionDB.instance.transactionListNotifier;
     TransactionDB.instance.refresh();
-    setState(() {});
     super.initState();
   }
 
-  final List<Overall> data = chartsort(
-      TransactionDB.instance.transactionListNotifier.value, dropdownValue);
+  final List<Overall> data =
+      chartsort(TransactionDB.instance.transactionListNotifier.value);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 41, 42, 41),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 08),
-          child: ValueListenableBuilder(
-            valueListenable: TransactionDB.instance.transactionListNotifier,
-            builder: (BuildContext ctx, List<TransactionModel> hb, Widget? _) {
-              return StatefulBuilder(
-                builder: (BuildContext context,
-                    void Function(void Function()) setState) {
-                  return SfCircularChart(
-                      key: UniqueKey(),
+      body: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+          Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 100, horizontal: 08),
+              child: data.isEmpty
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 200),
+                      child: Center(
+                          child: Text(
+                        'No data found',
+                        style: TextStyle(color: Colors.white),
+                      )),
+                    )
+                  : SfCircularChart(
                       legend: Legend(
                           borderWidth: 6,
                           isVisible: true,
                           textStyle: const TextStyle(color: Colors.white)),
                       series: <PieSeries>[
-                        // Render pie chart
-                        PieSeries<Overall, String>(
-                          dataSource: data,
-                          // pointColorMapper: ,
-                          xValueMapper: (Overall data, _) => data.type,
-                          yValueMapper: (Overall data, _) => data.amount,
-                          dataLabelSettings:
-                              const DataLabelSettings(isVisible: true),
-                          enableTooltip: true,
-                        )
-                      ]);
-                },
-              );
-            },
-          ),
-        ),
-      ]),
+                          // Render pie chart
+                          PieSeries<Overall, String>(
+                            dataSource: data,
+                            // pointColorMapper: ,
+                            xValueMapper: (Overall data, _) => data.type,
+                            yValueMapper: (Overall data, _) => data.amount,
+                            dataLabelSettings:
+                                const DataLabelSettings(isVisible: true),
+                            enableTooltip: true,
+                          )
+                        ])),
+        ]),
+      ),
     );
   }
 }
 
-List<Overall> chartsort(List<TransactionModel> model, String dropdownValue) {
+List<Overall> chartsort(List<TransactionModel> model) {
   double value;
   CategoryType categorytype;
   List visited = [];
@@ -96,6 +91,7 @@ List<Overall> chartsort(List<TransactionModel> model, String dropdownValue) {
       ));
     }
   }
+
   return newData;
 }
 

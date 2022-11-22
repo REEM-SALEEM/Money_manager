@@ -69,109 +69,134 @@ class _TransactionsRefState extends State<TransactionsRef> {
             currentbalance(modelList);
             return Stack(children: [
               //#main
-              Container(
+              SizedBox(
                 width: 410,
                 height: 250,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [
-                        Colors.black,
-                        Color.fromARGB(255, 24, 23, 23),
-                        Color.fromARGB(255, 33, 32, 32),
-                        Color.fromARGB(255, 57, 57, 57),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0, 0.2, 0.5, 0.8]),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                  child: Card(
-                    child: Column(children: [
-                      Text(widget.textFirst1,
-                          style: const TextStyle(
-                              // fontFamily: "Teko",
-                              letterSpacing: 4,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 15)),
-                      const SizedBox(height: 5),
-                      Text('${widget.textFirst2}$totalBalance',
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 35)),
-                    ]),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [
+                            Colors.black,
+                            Color.fromARGB(255, 24, 23, 23),
+                            Color.fromARGB(255, 33, 32, 32),
+                            Color.fromARGB(255, 57, 57, 57),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0, 0.2, 0.5, 0.8]),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                      child: Column(children: [
+                        Text(widget.textFirst1,
+                            style: const TextStyle(
+                                // fontFamily: "Teko",
+                                letterSpacing: 4,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 15)),
+                        const SizedBox(height: 5),
+                        Text('${widget.textFirst2}$totalBalance',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 35)),
+                      ]),
+                    ),
                   ),
                 ),
               ),
               //#1
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 150, 0, 0),
-                child: Container(
+                child: SizedBox(
                   width: 170,
                   height: 80,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [
-                          Color.fromARGB(255, 0, 78, 52),
-                          Color.fromARGB(255, 3, 92, 62),
-                          Colors.green,
-                          Color.fromARGB(255, 134, 255, 82)
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        stops: [0, 0.2, 0.5, 0.8]),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
                   child: Card(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(widget.textSec1,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w900, fontSize: 17)),
-                          const SizedBox(height: 2),
-                          Text('${widget.textSec2} $totalIncome',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 24))
-                        ]),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(11),
+                    ),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(255, 0, 78, 52),
+                              Color.fromARGB(255, 3, 92, 62),
+                              Colors.green,
+                              Color.fromARGB(255, 134, 255, 82)
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            stops: [0, 0.2, 0.5, 0.8]),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 6),
+                              Text(widget.textSec1,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 17)),
+                              const SizedBox(height: 2),
+                              Text('${widget.textSec2} $totalIncome',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24))
+                            ]),
+                      ),
+                    ),
                   ),
                 ),
               ),
               //#2
               Padding(
                 padding: const EdgeInsets.fromLTRB(185, 150, 0, 0),
-                child: Container(
+                child: SizedBox(
                   width: 170,
                   height: 80,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.orange,
-                        Colors.orangeAccent,
-                        Colors.red,
-                        Colors.redAccent,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0, 0.2, 0.5, 0.8],
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
                   child: Card(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(widget.textThird1,
-                              style: const TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.w900)),
-                          const SizedBox(height: 2),
-                          Text('${widget.textThird2}$totalExpense',
-                              style: const TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold))
-                        ]),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(11),
+                    ),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.orange,
+                            Colors.orangeAccent,
+                            Colors.red,
+                            Colors.redAccent,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          stops: [0, 0.2, 0.5, 0.8],
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: SingleChildScrollView(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(height: 6),
+                              Text(widget.textThird1,
+                                  style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w900)),
+                              const SizedBox(height: 2),
+                              Text('${widget.textThird2}$totalExpense',
+                                  style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold))
+                            ]),
+                      ),
+                    ),
                   ),
                 ),
               ),

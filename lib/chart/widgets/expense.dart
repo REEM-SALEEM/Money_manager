@@ -27,21 +27,32 @@ class _ScreenExpenseChartState extends State<ScreenExpenseChart> {
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
           Padding(
-              padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 08),
-              child: SfCircularChart(
-                  legend: Legend(
-                      borderWidth: 6,
-                      isVisible: true,
-                      textStyle: const TextStyle(color: Colors.white)),
-                  series: <PieSeries>[
-                    PieSeries<ExpenseData, String>(
-                      dataSource: data,
-                      xValueMapper: (ExpenseData data, _) => data.type,
-                      yValueMapper: (ExpenseData data, _) => data.amount,
-                      dataLabelSettings: const DataLabelSettings(isVisible: true),
-                      enableTooltip: true,
+              padding:
+                  const EdgeInsets.symmetric(vertical: 100, horizontal: 08),
+              child: data.isEmpty
+                  ? const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 200),
+                      child: Center(
+                          child: Text(
+                        'No data found',
+                        style: TextStyle(color: Colors.white),
+                      )),
                     )
-                  ])),
+                  : SfCircularChart(
+                      legend: Legend(
+                          borderWidth: 6,
+                          isVisible: true,
+                          textStyle: const TextStyle(color: Colors.white)),
+                      series: <PieSeries>[
+                          PieSeries<ExpenseData, String>(
+                            dataSource: data,
+                            xValueMapper: (ExpenseData data, _) => data.type,
+                            yValueMapper: (ExpenseData data, _) => data.amount,
+                            dataLabelSettings:
+                                const DataLabelSettings(isVisible: true),
+                            enableTooltip: true,
+                          )
+                        ])),
         ]),
       ),
     );
