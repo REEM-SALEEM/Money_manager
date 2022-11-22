@@ -4,6 +4,7 @@ import 'package:money_manager/transactions/refactor/card_refactor.dart';
 import '../../db/transaction/transaction_db.dart';
 import '../../model/category/category_model.dart';
 import '../../model/transaction/transaction_model.dart';
+import 'package:money_manager/db/category/category_db.dart';
 
 class TransactionList extends StatefulWidget {
   const TransactionList({super.key});
@@ -68,6 +69,12 @@ String dropdownValue = 'All';
 List<String> items = ['All', 'Today', 'Yesterday', 'Month', 'Custom'];
 
 class _TransactionListState extends State<TransactionList> {
+   @override
+  void initState() {
+    TransactionDB.instance.refresh();
+    CategoryDB.instance.refreshUI();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     TransactionDB.instance.refresh();

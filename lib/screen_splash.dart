@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/screen_navbar.dart';
-import 'package:money_manager/screen_onboarding.dart';
 import 'package:money_manager/screen_welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

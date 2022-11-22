@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:money_manager/screen_navbar.dart';
-import 'package:money_manager/screen_welcome.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenOnboarding extends StatefulWidget {
   const ScreenOnboarding({super.key});
