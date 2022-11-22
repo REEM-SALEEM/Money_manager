@@ -87,21 +87,23 @@ class _TransactionsRefState extends State<TransactionsRef> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                  child: Column(children: [
-                    Text(widget.textFirst1,
-                        style: const TextStyle(
-                            // fontFamily: "Teko",
-                            letterSpacing: 4,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 15)),
-                    const SizedBox(height: 5),
-                    Text('${widget.textFirst2}$totalBalance',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 35)),
-                  ]),
+                  child: Card(
+                    child: Column(children: [
+                      Text(widget.textFirst1,
+                          style: const TextStyle(
+                              // fontFamily: "Teko",
+                              letterSpacing: 4,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 15)),
+                      const SizedBox(height: 5),
+                      Text('${widget.textFirst2}$totalBalance',
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 35)),
+                    ]),
+                  ),
                 ),
               ),
               //#1
@@ -123,17 +125,19 @@ class _TransactionsRefState extends State<TransactionsRef> {
                         stops: [0, 0.2, 0.5, 0.8]),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(widget.textSec1,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.w900, fontSize: 17)),
-                        const SizedBox(height: 2),
-                        Text('${widget.textSec2} $totalIncome',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 24))
-                      ]),
+                  child: Card(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(widget.textSec1,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w900, fontSize: 17)),
+                          const SizedBox(height: 2),
+                          Text('${widget.textSec2} $totalIncome',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 24))
+                        ]),
+                  ),
                 ),
               ),
               //#2
@@ -156,17 +160,19 @@ class _TransactionsRefState extends State<TransactionsRef> {
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(widget.textThird1,
-                            style: const TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w900)),
-                        const SizedBox(height: 2),
-                        Text('${widget.textThird2}$totalExpense',
-                            style: const TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold))
-                      ]),
+                  child: Card(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(widget.textThird1,
+                              style: const TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.w900)),
+                          const SizedBox(height: 2),
+                          Text('${widget.textThird2}$totalExpense',
+                              style: const TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold))
+                        ]),
+                  ),
                 ),
               ),
             ]);

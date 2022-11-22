@@ -207,7 +207,7 @@ class _TransactionListState extends State<TransactionList> {
                   )),
               Expanded(
                 child: ValueListenableBuilder(
-                    valueListenable: dropdownValue == 'All'
+                    valueListenable: dropdownValue == 'All' || dp == 'Overall'
                         ? TransactionDB.instance.transactionListNotifier
                         : TransactionDB.instance.filterListNotifier,
                     builder: (BuildContext ctx, List<TransactionModel> newList,
@@ -223,7 +223,8 @@ class _TransactionListState extends State<TransactionList> {
                               itemBuilder: (context, index) {
                                 final value = newList[index];
                                 if (dp == 'Income' &&
-                                    value.type == CategoryType.income) {
+                                        value.type == CategoryType.income ||
+                                    monthsList[index] == 'Nov') {
                                   return CardRefactor(
                                     date: value.date,
                                     amount: value.amount,
@@ -234,7 +235,8 @@ class _TransactionListState extends State<TransactionList> {
                                     type: value.type,
                                   );
                                 } else if (dp == 'Expense' &&
-                                    value.type == CategoryType.expense) {
+                                        value.type == CategoryType.expense ||
+                                    monthsList[index] == 'Nov') {
                                   return CardRefactor(
                                     date: value.date,
                                     amount: value.amount,
@@ -244,7 +246,8 @@ class _TransactionListState extends State<TransactionList> {
                                     indexedit: index,
                                     type: value.type,
                                   );
-                                } else if (dp == 'Overall') {
+                                } else if (dp == 'Overall' ||
+                                    monthsList[index] == 'Nov') {
                                   return CardRefactor(
                                     date: value.date,
                                     amount: value.amount,
