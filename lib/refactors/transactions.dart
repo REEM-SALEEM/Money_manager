@@ -4,6 +4,7 @@ import 'package:money_manager/db/transaction/transaction_db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/category/category_model.dart';
 import '../model/transaction/transaction_model.dart';
+import 'package:sizer/sizer.dart';
 
 class TransactionsRef extends StatefulWidget {
   final String textFirst1;
@@ -112,94 +113,97 @@ class _TransactionsRefState extends State<TransactionsRef> {
                 ),
               ),
               //#1
-              Padding(
-                padding: const EdgeInsets.fromLTRB(10, 150, 0, 0),
-                child: SizedBox(
-                  width: 170,
-                  height: 80,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(11),
+              Row(children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(13, 150, 0, 0),
+                  child: SizedBox(
+                    width: 42.w,
+                    height: 80,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(11),
+                      ),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [
+                                Color.fromARGB(255, 0, 78, 52),
+                                Color.fromARGB(255, 3, 92, 62),
+                                Colors.green,
+                                Color.fromARGB(255, 134, 255, 82)
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              stops: [0, 0.2, 0.5, 0.8]),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 6),
+                                Text(widget.textSec1,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 17)),
+                                const SizedBox(height: 2),
+                                Text('${widget.textSec2} $totalIncome',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 24))
+                              ]),
+                        ),
+                      ),
                     ),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
+                  ),
+                ),
+                SizedBox(width: 1.w,),
+                //#2
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 150, 0, 0),
+                  child: SizedBox(
+                    width: 42.w,
+                    height: 80,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(11),
+                      ),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
                             colors: [
-                              Color.fromARGB(255, 0, 78, 52),
-                              Color.fromARGB(255, 3, 92, 62),
-                              Colors.green,
-                              Color.fromARGB(255, 134, 255, 82)
+                              Colors.orange,
+                              Colors.orangeAccent,
+                              Colors.red,
+                              Colors.redAccent,
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
-                            stops: [0, 0.2, 0.5, 0.8]),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 6),
-                              Text(widget.textSec1,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 17)),
-                              const SizedBox(height: 2),
-                              Text('${widget.textSec2} $totalIncome',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24))
-                            ]),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              //#2
-              Padding(
-                padding: const EdgeInsets.fromLTRB(185, 150, 0, 0),
-                child: SizedBox(
-                  width: 170,
-                  height: 80,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(11),
-                    ),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.orange,
-                            Colors.orangeAccent,
-                            Colors.red,
-                            Colors.redAccent,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          stops: [0, 0.2, 0.5, 0.8],
+                            stops: [0, 0.2, 0.5, 0.8],
+                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 6),
-                              Text(widget.textThird1,
-                                  style: const TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.w900)),
-                              const SizedBox(height: 2),
-                              Text('${widget.textThird2}$totalExpense',
-                                  style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold))
-                            ]),
+                        child: SingleChildScrollView(
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 6),
+                                Text(widget.textThird1,
+                                    style: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.w900)),
+                                const SizedBox(height: 2),
+                                Text('${widget.textThird2}$totalExpense',
+                                    style: const TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold))
+                              ]),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ]),
             ]);
           },
         ),

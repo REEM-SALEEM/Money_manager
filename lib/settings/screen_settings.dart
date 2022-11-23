@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../db/transaction/transaction_db.dart';
+import 'package:sizer/sizer.dart';
 
 class ScreenSetting extends StatefulWidget {
   const ScreenSetting({super.key});
@@ -113,10 +114,11 @@ class _ScreenSettingState extends State<ScreenSetting> {
             Visibility(
               visible: vals1 == false ? false : true,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 14, 0, 0),
+                padding: const EdgeInsets.fromLTRB(13, 14, 0, 0),
                 child: Container(
                   height: 70,
-                  width: 364,
+                  width: 93.w,
+                  // width: 364,
                   decoration: BoxDecoration(
                     color: Colors.grey,
                     boxShadow: const [
@@ -180,7 +182,7 @@ class _ScreenSettingState extends State<ScreenSetting> {
                 ),
               ),
             ),
-            const SizedBox(height: 250),
+            const SizedBox(height: 210),
             const Center(
               child: Text(
                 'Version 1.0.1',

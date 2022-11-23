@@ -64,14 +64,6 @@ class _IncomeState extends State<Income> {
                   });
             }),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showIncomepopup(context);
-        },
-        backgroundColor: Colors.black,
-        foregroundColor: const Color.fromARGB(255, 184, 252, 121),
-        child: const Icon(Icons.add, size: 30),
-      ),
     );
   }
 

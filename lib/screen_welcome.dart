@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/screen_navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 class ScreenWelcome extends StatefulWidget {
   const ScreenWelcome({super.key});
@@ -16,7 +17,6 @@ class _ScreenWelcomeState extends State<ScreenWelcome> {
 
   @override
   Widget build(BuildContext context) {
-    var mediaquery = MediaQuery.of(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 41, 42, 41),
@@ -25,10 +25,11 @@ class _ScreenWelcomeState extends State<ScreenWelcome> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(children: [
+                Row( mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                   Stack(children: [
                     Container(
-                      width: 310,
+                      width: 85.w,
                       height: 310,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 184, 252, 121)
@@ -40,25 +41,31 @@ class _ScreenWelcomeState extends State<ScreenWelcome> {
                         ),
                       ),
                     ),
+         
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(135, 0, 0, 0),
-                      child: Container(
-                        width: mediaquery.size.width * 0.62,
-                        height: 250,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 255, 255, 255)
-                              .withOpacity(0.5),
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(180.0),
-                            bottomRight: Radius.circular(200.0),
-                            bottomLeft: Radius.circular(200.0),
+                      padding: const EdgeInsets.fromLTRB(100, 0, 0, 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            width: 71.9.w,
+                            height: 35.h,
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 255, 255, 255)
+                                  .withOpacity(0.5),
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(180.0),
+                                bottomRight: Radius.circular(200.0),
+                                bottomLeft: Radius.circular(200.0),
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ]),
                 ]),
-                const SizedBox(height: 170),
+                SizedBox(height: 20.h),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
                   child: Text(

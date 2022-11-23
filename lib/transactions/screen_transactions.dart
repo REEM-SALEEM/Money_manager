@@ -8,6 +8,7 @@ import 'package:money_manager/db/transaction/transaction_db.dart';
 import 'package:money_manager/model/category/category_model.dart';
 import '../model/transaction/transaction_model.dart';
 import 'widgets/add_transactions.dart';
+import 'package:sizer/sizer.dart';
 
 class ScreenTransactions extends StatefulWidget {
   const ScreenTransactions({
@@ -55,36 +56,41 @@ class _ScreenTransactionsState extends State<ScreenTransactions> {
               textThird1: 'EXPENSE',
               textThird2: '- ₹ '),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
-            child: Row(children: [
-              const Text('RECENT TRANSACTIONS:',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold)),
-              const SizedBox(width: 140),
-              Container(
-                height: 40,
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const TransactionList(),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    children: const [
-                      Icon(Icons.arrow_right_alt, color: Colors.white),
-                    ],
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                const Text('RECENT TRANSACTIONS:',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                  SizedBox(width: 28.w),
+                Container(
+                  height: 5.h,
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const TransactionList(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.arrow_right_alt, color: Colors.white),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ]),
+               
+              ]),
+            ),
           ),
           Expanded(
             child: ValueListenableBuilder(
