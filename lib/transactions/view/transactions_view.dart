@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:money_manager/transactions/refactor/card_refactor.dart';
 import '../../db/transaction/transaction_db.dart';
@@ -102,7 +102,8 @@ class _TransactionListState extends State<TransactionList> {
           elevation: 0,
         ),
         body: Column(children: [
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Row(mainAxisAlignment: MainAxisAlignment.end
+          , children: [
             //----Category Drop down button
             Padding(
               padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
@@ -136,6 +137,7 @@ class _TransactionListState extends State<TransactionList> {
                 ),
               ),
             ),
+            SizedBox(width: 2.w,),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 6, 8, 6),
               child: Container(

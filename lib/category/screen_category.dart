@@ -18,6 +18,7 @@ int indexTab = 0;
 class _ScreenCategoryState extends State<ScreenCategory> {
   @override
   void initState() {
+    setState(() {});
     CategoryDB().refreshUI();
     setState(() {
       FloatingActionButton;
@@ -40,7 +41,7 @@ class _ScreenCategoryState extends State<ScreenCategory> {
                 style: TextStyle(fontSize: 20, color: Colors.white)),
             backgroundColor: Colors.black),
         body: Container(
-          height: 80.h,
+          height: 100.h,
           // height: 705,
           // width: 900,
           decoration: const BoxDecoration(
