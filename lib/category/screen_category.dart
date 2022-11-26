@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:money_manager/category/widgets/expense.dart';
-import 'package:money_manager/category/widgets/expense_popup.dart';
 import 'package:money_manager/category/widgets/income.dart';
-import 'package:money_manager/category/widgets/income_popup.dart';
 import 'package:sizer/sizer.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../db/category/category_db.dart';
+import '../model/category/category_model.dart';
 
 class ScreenCategory extends StatefulWidget {
   const ScreenCategory({super.key});
@@ -13,6 +14,7 @@ class ScreenCategory extends StatefulWidget {
   State<ScreenCategory> createState() => _ScreenCategoryState();
 }
 
+final _formKey = GlobalKey<FormState>();
 int indexTab = 0;
 
 class _ScreenCategoryState extends State<ScreenCategory> {
@@ -42,8 +44,7 @@ class _ScreenCategoryState extends State<ScreenCategory> {
             backgroundColor: Colors.black),
         body: Container(
           height: 100.h,
-          // height: 705,
-          // width: 900,
+          width: 100.w,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(30.0),
@@ -104,6 +105,124 @@ class _ScreenCategoryState extends State<ScreenCategory> {
                 foregroundColor: Colors.orangeAccent,
                 child: const Icon(Icons.add, size: 30)),
       ),
+    );
+  }
+
+  Future<void> showExpensepopup(BuildContext context) async {
+    final TextEditingController expenseController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: ((ctx) {
+        return SimpleDialog(
+          title: const Text('ADD EXPENSE'),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: expenseController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'expense',
+                  ),
+                  validator: ((value) {
+                    if (value!.isEmpty) {
+                      return 'This is required';
+                    }
+                    return null;
+                  }),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                onPressed: () {
+                  final name = expenseController.text;
+
+                  if (_formKey.currentState!.validate() == true) {
+                    final expensecategory = CategoryModel(
+                        id: DateTime.now().microsecondsSinceEpoch.toString(),
+                        type: CategoryType.expense,
+                        name: name);
+                    CategoryDB.instance.insertCategory(expensecategory);
+
+                    Navigator.of(ctx).pop();
+                    showTopSnackBar(context,
+                        const CustomSnackBar.success(message: "Data Entered"),
+                        displayDuration: const Duration(seconds: 2));
+                  }
+                },
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            )
+          ],
+        );
+      }),
+    );
+  }
+
+  Future<void> showIncomepopup(BuildContext context) async {
+    final TextEditingController incomeController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: ((ctx) {
+        return SimpleDialog(
+          title: const Text('ADD INCOME'),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: incomeController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'income',
+                  ),
+                  validator: ((value) {
+                    if (value!.isEmpty) {
+                      return 'This is required';
+                    }
+                    return null;
+                  }),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
+                onPressed: () {
+                  final name1 = incomeController.text;
+                  if (_formKey.currentState!.validate() == true) {
+                    final incomecategory = CategoryModel(
+                        id: DateTime.now().microsecondsSinceEpoch.toString(),
+                        type: CategoryType.income,
+                        name: name1);
+                    CategoryDB.instance.insertCategory(incomecategory);
+
+                    Navigator.of(ctx).pop();
+                    showTopSnackBar(context,
+                        const CustomSnackBar.success(message: "Data Entered"),
+                        displayDuration: const Duration(seconds: 2));
+                  }
+                },
+                child: const Text(
+                  'Submit',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            )
+          ],
+        );
+      }),
     );
   }
 }

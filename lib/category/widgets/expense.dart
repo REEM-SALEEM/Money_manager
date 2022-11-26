@@ -4,7 +4,6 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../db/category/category_db.dart';
 import '../../model/category/category_model.dart';
 
-
 class Expense extends StatefulWidget {
   const Expense({super.key});
 
@@ -74,19 +73,19 @@ class _ExpenseState extends State<Expense> {
         return SimpleDialog(backgroundColor: Colors.black, children: [
           const Center(
             child: Text(
-              'Are you sure you want to delete?',
+              'Are you sure to delete?',
               style: TextStyle(color: Colors.white),
             ),
           ),
           const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                width: 80,
+                child: ElevatedButton(
                     onPressed: () {
                       CategoryDB.instance.deleteCategory(id);
                       Navigator.of(context).pop(context);
@@ -94,19 +93,19 @@ class _ExpenseState extends State<Expense> {
                           const CustomSnackBar.error(message: "Deleted"),
                           displayDuration: const Duration(seconds: 2));
                     },
-                    child: const Text('yes')),
-                const SizedBox(
-                  width: 5,
-                ),
-                ElevatedButton(
+                    child: const Text('Yes')),
+              ),
+              SizedBox(
+                width: 80,
+                child: ElevatedButton(
                     onPressed: () {
                       setState(() {
                         Navigator.of(context).pop(context);
                       });
                     },
                     child: const Text('Cancel')),
-              ],
-            ),
+              ),
+            ],
           )
         ]);
       }),

@@ -3,6 +3,7 @@ import 'package:money_manager/model/category/category_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../db/transaction/transaction_db.dart';
 import '../../model/transaction/transaction_model.dart';
+import 'package:sizer/sizer.dart';
 
 class ScreenOverall extends StatefulWidget {
   const ScreenOverall({super.key});
@@ -25,39 +26,38 @@ class _ScreenOverallState extends State<ScreenOverall> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 41, 42, 41),
-      body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-          Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 100, horizontal: 08),
-              child: data.isEmpty
-                  ? const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 200),
-                      child: Center(
-                          child: Text(
-                        'No data found',
-                        style: TextStyle(color: Colors.white),
-                      )),
-                    )
-                  : SfCircularChart(
-                      legend: Legend(
-                          borderWidth: 6,
-                          isVisible: true,
-                          textStyle: const TextStyle(color: Colors.white)),
-                      series: <PieSeries>[
-                          // Render pie chart
-                          PieSeries<Overall, String>(
-                            dataSource: data,
-                            // pointColorMapper: ,
-                            xValueMapper: (Overall data, _) => data.type,
-                            yValueMapper: (Overall data, _) => data.amount,
-                            dataLabelSettings:
-                                const DataLabelSettings(isVisible: true),
-                            enableTooltip: true,
-                          )
-                        ])),
-        ]),
-      ),
+      body: data.isEmpty
+          ? const Padding(
+              padding: EdgeInsets.symmetric(vertical: 200),
+              child: Center(
+                  child: Text(
+                'No data found',
+                style: TextStyle(color: Colors.white),
+              )),
+            )
+          : Center(
+              child: SizedBox(
+                width: 100.w,
+                height: 300,
+                child: SfCircularChart(
+                    legend: Legend(
+                        borderWidth: 6,
+                        isVisible: true,
+                        textStyle: const TextStyle(color: Colors.white)),
+                    series: <PieSeries>[
+                      // Render pie chart
+                      PieSeries<Overall, String>(
+                        dataSource: data,
+                        // pointColorMapper: ,
+                        xValueMapper: (Overall data, _) => data.type,
+                        yValueMapper: (Overall data, _) => data.amount,
+                        dataLabelSettings:
+                            const DataLabelSettings(isVisible: true),
+                        enableTooltip: true,
+                      )
+                    ]),
+              ),
+            ),
     );
   }
 }

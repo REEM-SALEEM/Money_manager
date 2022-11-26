@@ -59,37 +59,36 @@ class _ScreenTransactionsState extends State<ScreenTransactions> {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
             child: Center(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                const Text('RECENT TRANSACTIONS:',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold)),
-                  SizedBox(width: 28.w),
-                Container(
-                  height: 5.h,
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const TransactionList(),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('RECENT TRANSACTIONS:',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                    SizedBox(width: 28.w),
+                    Container(
+                      height: 5.h,
+                      decoration: const BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const TransactionList(),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: const [
+                            Icon(Icons.arrow_right_alt, color: Colors.white),
+                          ],
                         ),
-                      );
-                    },
-                    child: Row(
-                      children: const [
-                        Icon(Icons.arrow_right_alt, color: Colors.white),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-               
-              ]),
+                  ]),
             ),
           ),
           Expanded(
@@ -97,22 +96,29 @@ class _ScreenTransactionsState extends State<ScreenTransactions> {
               valueListenable: TransactionDB.instance.transactionListNotifier,
               builder: (BuildContext ctx, List<TransactionModel> newList,
                   Widget? _) {
-                return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final value = newList[index];
-                      return CardRefactor(
-                        date: value.date,
-                        amount: value.amount,
-                        catname: value.category.name,
-                        id: value.id,
-                        valueedit: value,
-                        indexedit: index,
-                        type: value.type,
-                      );
-                    },
-                    itemCount: newList.length < 5 ? newList.length : 5);
+                return newList.isEmpty
+                    ? const Center(
+                        child: Text(
+                          'No data found',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final value = newList[index];
+                          return CardRefactor(
+                            date: value.date,
+                            amount: value.amount,
+                            catname: value.category.name,
+                            id: value.id,
+                            valueedit: value,
+                            indexedit: index,
+                            type: value.type,
+                          );
+                        },
+                        itemCount: newList.length < 5 ? newList.length : 5);
               },
             ),
           ),

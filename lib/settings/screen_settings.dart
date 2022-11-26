@@ -11,6 +11,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../db/transaction/transaction_db.dart';
 import 'package:sizer/sizer.dart';
 
+
 class ScreenSetting extends StatefulWidget {
   const ScreenSetting({super.key});
 
@@ -32,54 +33,25 @@ class _ScreenSettingState extends State<ScreenSetting> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 42, 41, 41),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(15, 100, 0, 40),
-              child: Text(
-                'SETTINGS',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(15, 100, 0, 40),
+            child: Text(
+              'SETTINGS',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-              child: InkWell(
-                onTap: () {
-                  resetPopup(context);
-                },
-                child: Container(
-                  height: 70,
-                  decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 7.0,
-                        offset: Offset(6.0, 6.0),
-                      )
-                    ],
-                    border: Border.all(color: Colors.grey, width: 1),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: const ListTile(
-                    leading: Icon(
-                      Icons.refresh,
-                      size: 30,
-                    ),
-                    iconColor: Colors.white,
-                    title: Text(
-                      'Reset App',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+            child: InkWell(
+              onTap: () {
+                resetPopup(context);
+              },
               child: Container(
                 height: 70,
                 decoration: BoxDecoration(
@@ -92,105 +64,132 @@ class _ScreenSettingState extends State<ScreenSetting> {
                   border: Border.all(color: Colors.grey, width: 1),
                 ),
                 padding: const EdgeInsets.all(10),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.notifications,
+                child: const ListTile(
+                  leading: Icon(
+                    Icons.refresh,
                     size: 30,
                   ),
                   iconColor: Colors.white,
-                  title: const Text('Reminders',
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
-                  trailing: Switch(
-                    value: vals1,
-                    onChanged: (value) {
-                      setState(() {
-                        vals1 = value;
-                      });
-                    },
+                  title: Text(
+                    'Reset App',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),
             ),
-            Visibility(
-              visible: vals1 == false ? false : true,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(13, 14, 0, 0),
-                child: Container(
-                  height: 70,
-                  width: 93.w,
-                  // width: 364,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 7.0,
-                        offset: Offset(6.0, 6.0),
-                      )
-                    ],
-                    border: Border.all(color: Colors.black, width: 1),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+            child: Container(
+              height: 70,
+              decoration: BoxDecoration(
+                boxShadow: const [
+                  BoxShadow(
+                    blurRadius: 7.0,
+                    offset: Offset(6.0, 6.0),
+                  )
+                ],
+                border: Border.all(color: Colors.grey, width: 1),
+              ),
+              padding: const EdgeInsets.all(10),
+              child: ListTile(
+                leading: const Icon(
+                  Icons.notifications,
+                  size: 30,
+                ),
+                iconColor: Colors.white,
+                title: const Text('Reminders',
+                    style: TextStyle(color: Colors.white, fontSize: 20)),
+                trailing: Switch(
+                  value: vals1,
+                  onChanged: (value) {
+                    setState(() {
+                      vals1 = value;
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: vals1 == false ? false : true,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(13, 14, 0, 0),
+              child: Container(
+                height: 70,
+                width: 93.w,
+                // width: 364,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 7.0,
+                      offset: Offset(6.0, 6.0),
+                    )
+                  ],
+                  border: Border.all(color: Colors.black, width: 1),
+                ),
+                padding: const EdgeInsets.fromLTRB(10, 7, 7, 7),
+                child: ListTile(
+                  onTap: () async {
+                    await timePicked(context);
+                  },
+                  leading: const Icon(
+                    Icons.timelapse,
+                    size: 32,
                   ),
-                  padding: const EdgeInsets.fromLTRB(10, 7, 7, 7),
-                  child: ListTile(
-                    onTap: () async {
-                      await timePicked(context);
-                    },
-                    leading: const Icon(
-                      Icons.timelapse,
-                      size: 32,
-                    ),
-                    iconColor: Colors.black,
-                    title: const Text(
-                      'Set Timer',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
+                  iconColor: Colors.black,
+                  title: const Text(
+                    'Set Timer',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-              child: InkWell(
-                onTap: () {
-                  aboutPopup(context);
-                },
-                child: Container(
-                  height: 70,
-                  decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 7.0,
-                        offset: Offset(6.0, 6.0),
-                      )
-                    ],
-                    border: Border.all(color: Colors.grey, width: 1),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+            child: InkWell(
+              onTap: () {
+                aboutPopup(context);
+              },
+              child: Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 7.0,
+                      offset: Offset(6.0, 6.0),
+                    )
+                  ],
+                  border: Border.all(color: Colors.grey, width: 1),
+                ),
+                padding: const EdgeInsets.all(10),
+                child: const ListTile(
+                  leading: Icon(
+                    Icons.info_outline,
+                    size: 30,
                   ),
-                  padding: const EdgeInsets.all(10),
-                  child: const ListTile(
-                    leading: Icon(
-                      Icons.info_outline,
-                      size: 30,
-                    ),
-                    iconColor: Colors.white,
-                    title: Text(
-                      'About',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
+                  iconColor: Colors.white,
+                  title: Text(
+                    'About',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 210),
-            const Center(
-              child: Text(
-                'Version 1.0.1',
-                style: TextStyle(color: Colors.grey),
-              ),
+          ),
+           const SizedBox(height: 25),
+          const Center(
+            child: Text(
+              'Version 1.0.1',
+              style: TextStyle(color: Colors.grey),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -211,27 +210,27 @@ class _ScreenSettingState extends State<ScreenSetting> {
             children: [
               const Center(
                 child: Text(
-                  'Are you sure you want to reset app?',
+                  'Are you sure to reset app?',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                    width: 80,
+                    child: ElevatedButton(
                         onPressed: () {
                           clearAppData();
                         },
-                        child: const Text('yes')),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    ElevatedButton(
+                        child: const Text('Yes')),
+                  ),
+                  SizedBox(
+                    width: 80,
+                    child: ElevatedButton(
                         onPressed: () {
                           setState(() {
                             Navigator.of(context).pop(context);
@@ -239,8 +238,8 @@ class _ScreenSettingState extends State<ScreenSetting> {
                           });
                         },
                         child: const Text('Cancel')),
-                  ],
-                ),
+                  ),
+                ],
               )
             ]);
       }),

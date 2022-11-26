@@ -71,7 +71,8 @@ class _TransactionsRefState extends State<TransactionsRef> {
             return Stack(children: [
               //#main
               SizedBox(
-                width: 410,
+                width: 90.w,
+                // width: 410,
                 height: 250,
                 child: Card(
                   shape: RoundedRectangleBorder(

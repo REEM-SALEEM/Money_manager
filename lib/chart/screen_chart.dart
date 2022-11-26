@@ -24,14 +24,11 @@ class ScreenChart extends StatelessWidget {
                 style: TextStyle(fontSize: 17, color: Colors.white)),
           ]),
         ),
-        body: const SizedBox(
-          width: 400,
-          child: TabBarView(physics: BouncingScrollPhysics(), children: [
-            ScreenOverall(),
-            ScreenIncomeChart(),
-            ScreenExpenseChart(),
-          ]),
-        ),
+        body: const TabBarView(physics: BouncingScrollPhysics(), children: [
+          ScreenOverall(),
+          ScreenIncomeChart(),
+          ScreenExpenseChart(),
+        ]),
       ),
     );
   }
