@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:money_manager/db/transaction/transaction_db.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../model/category/category_model.dart';
-import '../model/transaction/transaction_model.dart';
-import 'package:sizer/sizer.dart';
+import 'package:money_manager/Controller/provider/prov_transactions.dart';
+import 'package:provider/provider.dart';
 
-class TransactionsRef extends StatefulWidget {
+import 'package:sizer/sizer.dart';
+import '../Controller/provider/prov_sharedpreference.dart';
+import '../Controller/provider/prov_tot.dart';
+
+class TransactionsRef extends StatelessWidget {
   final String textFirst1;
   final String textFirst2;
   final String textSec1;
   final String textSec2;
   final String textThird1;
   final String textThird2;
-  const TransactionsRef({
+  TransactionsRef({
     super.key,
     required this.textFirst1,
     required this.textFirst2,
@@ -23,34 +24,37 @@ class TransactionsRef extends StatefulWidget {
     required this.textThird2,
   });
 
-  @override
-  State<TransactionsRef> createState() => _TransactionsRefState();
-}
-
-class _TransactionsRefState extends State<TransactionsRef> {
-  //declare sharedpreference value.
-  String? savedName;
-  //declare & initialize(initially 0) Amount value.
-  double totalBalance = 0;
-  double totalIncome = 0;
-  double totalExpense = 0;
+  dynamic paps;
+  dynamic insp;
   @override
   Widget build(BuildContext context) {
-    getSavedData(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var insp = Provider.of<ProvTransactionDB>(context, listen: false)
+          .transactionListNotifier;
+      paps = context.read<Total>().currentbalance(insp);
+
+      Provider.of<ProvGetnSet>(context, listen: false).getSavedData(context);
+    });
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 12, 15, 0),
       child: Column(children: [
         Row(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            savedName == null //checking savedname is null/not here!
-                ? const Text('is null')
-                : Text(
-                    'Hi, ${savedName!.toUpperCase()}!',
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 19),
-                  ),
+            Consumer<ProvGetnSet>(
+              builder: (BuildContext context, value, Widget? child) {
+                return value.savedName ==
+                        null //checking savedname is null/not here!
+                    ? const Text('is null')
+                    : Text(
+                        'Hi, ${value.savedName!.toUpperCase()}!',
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19),
+                      );
+              },
+            ),
             const SizedBox(height: 5),
             Text(
               DateFormat.yMMMMd().format(DateTime.now()),
@@ -63,16 +67,18 @@ class _TransactionsRefState extends State<TransactionsRef> {
           ]),
         ]),
         const SizedBox(height: 23),
-        ValueListenableBuilder(
-          valueListenable: TransactionDB.instance.transactionListNotifier,
-          builder:
-              (BuildContext ctx, List<TransactionModel> modelList, Widget? _) {
-            currentbalance(modelList);
+        Consumer<Total>(
+          builder: (BuildContext ctx, modelList, Widget? _) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              var insp = Provider.of<ProvTransactionDB>(context, listen: false)
+                  .transactionListNotifier;
+              context.read<Total>().currentbalance(insp);
+            });
+
             return Stack(children: [
               //#main
               SizedBox(
                 width: 90.w,
-                // width: 410,
                 height: 250,
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -95,7 +101,7 @@ class _TransactionsRefState extends State<TransactionsRef> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
                       child: Column(children: [
-                        Text(widget.textFirst1,
+                        Text(textFirst1,
                             style: const TextStyle(
                                 // fontFamily: "Teko",
                                 letterSpacing: 4,
@@ -103,7 +109,7 @@ class _TransactionsRefState extends State<TransactionsRef> {
                                 fontWeight: FontWeight.w900,
                                 fontSize: 15)),
                         const SizedBox(height: 5),
-                        Text('${widget.textFirst2}$totalBalance',
+                        Text('$textFirst2${modelList.totalBalance}',
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -143,12 +149,12 @@ class _TransactionsRefState extends State<TransactionsRef> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const SizedBox(height: 6),
-                                Text(widget.textSec1,
+                                Text(textSec1,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w900,
                                         fontSize: 17)),
                                 const SizedBox(height: 2),
-                                Text('${widget.textSec2} $totalIncome',
+                                Text('$textSec2 ${modelList.totalIncome}',
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 24))
@@ -158,7 +164,9 @@ class _TransactionsRefState extends State<TransactionsRef> {
                     ),
                   ),
                 ),
-                SizedBox(width: 1.w,),
+                SizedBox(
+                  width: 1.w,
+                ),
                 //#2
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 150, 0, 0),
@@ -189,12 +197,12 @@ class _TransactionsRefState extends State<TransactionsRef> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const SizedBox(height: 6),
-                                Text(widget.textThird1,
+                                Text(textThird1,
                                     style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.w900)),
                                 const SizedBox(height: 2),
-                                Text('${widget.textThird2}$totalExpense',
+                                Text('$textThird2${modelList.totalExpense}',
                                     style: const TextStyle(
                                         fontSize: 24,
                                         fontWeight: FontWeight.bold))
@@ -210,33 +218,5 @@ class _TransactionsRefState extends State<TransactionsRef> {
         ),
       ]),
     );
-  }
-
-//*get the saved name
-  Future<void> getSavedData(BuildContext context) async {
-    final sharedprefs = await SharedPreferences.getInstance();
-    //getter method - get the saved name by key
-    savedName = sharedprefs.getString('saved_name');
-    setState(() {});
-  }
-
-//*Amount calculation
-  currentbalance(List<TransactionModel> value) {
-    totalBalance = 0;
-    totalIncome = 0;
-    totalExpense = 0;
-
-    for (TransactionModel value in value) {
-      if (value.category.type == CategoryType.income) {
-        totalIncome = totalIncome + value.amount;
-      }
-      if (value.category.type == CategoryType.expense) {
-        totalExpense = totalExpense + value.amount;
-      }
-    }
-    totalBalance = totalIncome - totalExpense;
-    if (totalBalance < 0) {
-      totalBalance = 0;
-    }
   }
 }
